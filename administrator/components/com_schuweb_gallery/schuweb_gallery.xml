@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="component" version="3.0" method="upgrade">
+    <name>com_schuweb_gallery</name>
+    <author>Schultschik Websolution</author>
+    <creationDate>October 2012</creationDate>
+    <copyright>Copyright (C) 2012 Schultschik Websolution, Sven Schultschik. All rights reserved.	</copyright>
+    <license>GNU General Public License version 2 or later</license>
+    <authorEmail>info@schultschik.de</authorEmail>
+    <authorUrl>extensions.schultschik.de</authorUrl>
+    <version>0.0.0</version>
+    <description>COM_SCHUWEB_GALLERY_XML_DESCRIPTION</description>
+    <administration>
+        <menu link="option=com_schuweb_gallery" img="class:schuweb_gallery">SchuWeb Gallery</menu>
+
+        <files folder="admin">
+            <folder>helpers</folder>
+            <folder>models</folder>
+            <!--folder>tables</folder-->
+            <folder>views</folder>
+            <filename>config.xml</filename>
+            <folder>controllers</folder>
+            <filename>index.html</filename>
+            <filename>schuweb_gallery.php</filename>
+        </files>
+        <languages folder="admin">
+            <language tag="en-GB">language/en-GB.com_schuweb_gallery.ini
+            </language>
+            <language tag="en-GB">language/en-GB.com_schuweb_gallery.sys.ini
+            </language>
+        </languages>
+    </administration>
+</extension>

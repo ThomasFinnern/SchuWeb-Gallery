@@ -9,11 +9,12 @@
 
 defined('_JEXEC') or die;
 
-if (!JFactory::getUser()->authorise('core.manage', 'com_schuweb_gallery'))
-{
+if (!JFactory::getUser()->authorise('core.manage', 'com_schuweb_gallery')) {
     return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
 }
 
-$controller	= JControllerLegacy::getInstance('SchuWeb_gallery');
+jimport('joomla.application.component.controller');
+
+$controller = JControllerLegacy::getInstance('SchuWeb_Gallery');
 $controller->execute(JFactory::getApplication()->input->get('task'));
 $controller->redirect();

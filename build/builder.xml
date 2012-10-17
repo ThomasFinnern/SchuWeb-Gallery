@@ -15,9 +15,10 @@
     <property name="builddir" value="./../../packages/schuweb_gallery" override="true" />
     <!-- Declare Project src files -->
     <property name="src" value="./.." override="true" />
-    <property name="admin" value="${src}/com_schuweb_gallery/administrator/components/com_schuweb_gallery" />
-    <property name="frontend" value="${src}/com_schuweb_gallery/components/com_schuweb_gallery" />
-    <property name="plugins" value="${src}/plugin" />
+    <property name="admin" value="${src}/administrator/components/com_schuweb_gallery" />
+    <property name="frontend" value="${src}/components/com_schuweb_gallery" />
+    <property name="plugins" value="${src}/plugins" />
+    <property name="media" value="${src}/media" />
 
     <!-- Set the needed filesets. First admin folder -->
     <fileset dir="${admin}" id="admin">
@@ -34,6 +35,10 @@
         <include name="**" />
     </fileset>
 
+    <fileset dir="${media}" id="media">
+        <include name="**" />
+    </fileset>
+
     <target name="build" depends="prepare, copy, zipplugins">
         <zip destfile="${builddir}/schuweb_gallery_${build.version}_${build.date.DSTAMP}.zip">
             <fileset dir="${builddir}/tmp">
@@ -47,6 +52,7 @@
     <target name="prepare">
         <mkdir dir="${builddir}/tmp/admin" />
         <mkdir dir="${builddir}/tmp/site" />
+        <mkdir dir="${builddir}/tmp/media" />
         <mkdir dir="${builddir}/tmp/admin/plugins" />
         <echo msg="Create temp folder OK!" />
     </target>
@@ -60,13 +66,16 @@
         <copy todir="${builddir}/tmp/site">
             <fileset refid="frontend" />
         </copy>
+        <copy todir="${builddir}/tmp/media">
+            <fileset refid="media" />
+        </copy>
         <!-- copy the plugins -->
         <copy todir="${builddir}/tmp/admin/plugins">
             <fileset refid="plugins" />
         </copy>
          <!-- Copy the manifest.xml -->
         <copy file="${admin}/schuweb_gallery.xml" tofile="${builddir}/tmp/schuweb_gallery.xml" />
-        <copy file="${admin}/install.php" tofile="${builddir}/tmp/install.php" />
+        <!--copy file="${admin}/install.php" tofile="${builddir}/tmp/install.php" /-->
         <echo msg="Copy was successfull" />
         <!-- insert version, build number and date into the xml files -->
         <reflexive>

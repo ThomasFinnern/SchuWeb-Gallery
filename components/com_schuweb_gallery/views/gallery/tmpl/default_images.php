@@ -13,8 +13,8 @@ defined('_JEXEC') or die;
 <ul class="thumbnails">
     <?php foreach ($this->images as $image) : ?>
     <li class="span<?php echo $this->image_grid_size; ?>">
-        <a href="#" class="thumbnail">
-            <img src="<?php echo $image; ?>" alt="">
+        <a href="<?php echo $image['image']; ?>" class="thumbnail group_images">
+            <img src="<?php echo $image['thumb']; ?>" alt="">
         </a>
     </li>
     <?php endforeach; ?>

@@ -9,13 +9,16 @@
 
 defined('_JEXEC') or die;
 
+// import Joomla controller library
+jimport('joomla.application.component.controller');
+
 /**
  * SchuWeb Gallery master display controller.
  *
  * @package     Joomla.Administrator
  * @subpackage  com_schuweb_gallery
  */
-class SchuWeb_galleryController extends JControllerLegacy
+class SchuWeb_GalleryController extends JControllerLegacy
 {
    /**
      * Method to display a view.
@@ -27,6 +30,10 @@ class SchuWeb_galleryController extends JControllerLegacy
      */
     public function display($cachable = false, $urlparams = false)
     {
+        // set default view if not set
+        $input = JFactory::getApplication()->input;
+        $input->set('view', $input->get('view', 'gallery'));
+
         parent::display($cachable, $urlparams);
     }
 }

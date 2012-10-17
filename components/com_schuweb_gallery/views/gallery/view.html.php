@@ -10,6 +10,7 @@
 defined('_JEXEC') or die;
 
 jimport('joomla.filesystem.folder');
+require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/thumbs.php');
 
 class SchuWeb_GalleryViewGallery extends JViewLegacy
 {
@@ -18,15 +19,17 @@ class SchuWeb_GalleryViewGallery extends JViewLegacy
 
     public function display($tpl = null)
     {
-        require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/thumbs.php');
         $thumbhelper = new ThumbsHelper();
+        $input = JFactory::getApplication()->input;
+        $document = JFactory::getDocument();
+
+
         $start_folder = $thumbhelper->getParams()->get('start_folder');
         $this->folder_grid_size = $thumbhelper->getParams()->get('folder_grid_size');
         $this->image_grid_size = $thumbhelper->getParams()->get('image_grid_size');
-        $input = JFactory::getApplication()->input;
         $entry_folder = $input->get('folder', null, 'STRING');
         if ($entry_folder) {
-            $start_folder = preg_replace(array('/\:/','/\./'), array('-','/'), $entry_folder);
+            $start_folder = preg_replace(array('/\:/', '/\./'), array('-', '/'), $entry_folder);
         }
         //get folders
         $excludes = $thumbhelper->getFolder_excludes();
@@ -48,6 +51,13 @@ class SchuWeb_GalleryViewGallery extends JViewLegacy
         }
 
         $this->images = $thumbhelper->getThumbs($start_folder);
+
+        $web = JApplicationWeb::getInstance();
+        if (!$web->client->mobile) {
+            $document->addStyleSheet(JUri::base() . 'media/com_schuweb_gallery/css/colorbox.css')
+                ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/colorbox/jquery.colorbox-min.js')
+                ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/schuweb_colorbox.js');
+        }
 
         parent::display($tpl);
     }

@@ -54,12 +54,21 @@ class SchuWeb_GalleryViewGallery extends JViewLegacy
 
         $web = JApplicationWeb::getInstance();
         if (!$web->client->mobile) {
-            $document->addStyleSheet(JUri::base() . 'media/com_schuweb_gallery/css/colorbox.css')
+            $dispatcher = JDispatcher::getInstance();
+            $dispatcher->register('onBeforeCompileHead', 'triggerSchuWebScriptjQuery');
+            /*$document->addStyleSheet(JUri::base() . 'media/com_schuweb_gallery/css/colorbox.css')
                 ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/colorbox/jquery.colorbox-min.js')
-                ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/schuweb_colorbox.js');
+                ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/schuweb_colorbox.js');*/
         }
 
         parent::display($tpl);
     }
 
+}
+
+function triggerSchuWebScriptjQuery(){
+    $document = JFactory::getDocument();
+    $document->addStyleSheet(JUri::base() . 'media/com_schuweb_gallery/css/colorbox.css')
+        ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/colorbox/jquery.colorbox-min.js')
+        ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/schuweb_colorbox.js');
 }

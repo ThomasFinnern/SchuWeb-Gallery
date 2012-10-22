@@ -43,8 +43,8 @@
             <filename>schuweb_gallery.php</filename>
         </files>
         <languages folder="admin">
-            <language tag="en-GB">language/en-GB/en-GB.com_schuweb_gallery.sys.ini
-            </language>
+            <language tag="en-GB">language/en-GB/en-GB.com_schuweb_gallery.ini</language>
+            <language tag="en-GB">language/en-GB/en-GB.com_schuweb_gallery.sys.ini</language>
         </languages>
     </administration>
 </extension>

@@ -14,7 +14,7 @@ class ThumbsHelper
     private $params;
     private $size = '300x200';
     private $resize_method;
-    private $image_excludes = array('.svn', 'CVS', '.DS_Store', '__MACOSX', 'index.html');
+    private $image_excludes = array('.svn', 'CVS', '.DS_Store', '__MACOSX', 'index.html', 'joomla_black.gif', 'joomla_green.gif', 'joomla_logo_black.jpg', 'powered_by.png');
     private $folder_excludes = array('.svn', 'CVS', '.DS_Store', '__MACOSX', 'thumbs', 'tmp');
 
     public function __construct()

@@ -21,8 +21,6 @@ class SchuWeb_GalleryViewGallery extends JViewLegacy
     {
         $thumbhelper = new ThumbsHelper();
         $input = JFactory::getApplication()->input;
-        $document = JFactory::getDocument();
-
 
         $start_folder = $thumbhelper->getParams()->get('start_folder');
         $this->folder_grid_size = $thumbhelper->getParams()->get('folder_grid_size');
@@ -52,23 +50,9 @@ class SchuWeb_GalleryViewGallery extends JViewLegacy
 
         $this->images = $thumbhelper->getThumbs($start_folder);
 
-        $web = JApplicationWeb::getInstance();
-        if (!$web->client->mobile) {
-            $dispatcher = JDispatcher::getInstance();
-            $dispatcher->register('onBeforeCompileHead', 'triggerSchuWebScriptjQuery');
-            /*$document->addStyleSheet(JUri::base() . 'media/com_schuweb_gallery/css/colorbox.css')
-                ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/colorbox/jquery.colorbox-min.js')
-                ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/schuweb_colorbox.js');*/
-        }
+        $thumbhelper->insertJS();
 
         parent::display($tpl);
     }
 
-}
-
-function triggerSchuWebScriptjQuery(){
-    $document = JFactory::getDocument();
-    $document->addStyleSheet(JUri::base() . 'media/com_schuweb_gallery/css/colorbox.css')
-        ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/colorbox/jquery.colorbox-min.js')
-        ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/schuweb_colorbox.js');
 }

@@ -13,8 +13,9 @@ class ThumbsHelper
 {
     private $params;
     private $size = '300x200';
+    private $resize_method;
     private $image_excludes = array('.svn', 'CVS', '.DS_Store', '__MACOSX', 'index.html');
-    private $folder_excludes = array('.svn', 'CVS', '.DS_Store', '__MACOSX', 'thumbs');
+    private $folder_excludes = array('.svn', 'CVS', '.DS_Store', '__MACOSX', 'thumbs', 'tmp');
 
     public function __construct()
     {
@@ -29,6 +30,8 @@ class ThumbsHelper
             $folders_exclude[$k] = trim($v);
         }
         $this->folder_excludes = array_merge($folders_exclude, $this->folder_excludes);
+        $this->size = $this->params->get('size', '300x200');
+        $this->resize_method = $this->params->get('resize_method', 1);
     }
 
     public function getParams()
@@ -55,7 +58,7 @@ class ThumbsHelper
                 $ext = JFile::getExt($absolut_path . '/' . $file);
                 $name = basename($absolut_path . '/' . $file, '.' . $ext);
                 self::checkThumbs($absolut_path, $file, $ext, $name);
-                $res['thumb'] = JURI::base() . $path . '/thumbs/' . $name . '_' . $this->params->get('size') . '.' . $ext;
+                $res['thumb'] = JURI::base() . $path . '/thumbs/' . $name . '_' . $this->size . '.' . $ext;
                 $res['image'] = JURI::base() . $path . '/' . $name . '.' . $ext;
             }
         }
@@ -65,8 +68,8 @@ class ThumbsHelper
     public function getThumbs($path)
     {
         $res = false;
-        if (JFolder::exists($path)) {
-            $files = JFolder::files($path, '.', false, false, $this->image_excludes);
+        if (JFolder::exists(JPATH_BASE . '/' . $path)) {
+            $files = JFolder::files(JPATH_BASE . '/' . $path, '.', false, false, $this->image_excludes);
             foreach ($files as $file) {
                 $res[] = $this->getThumb($path, $file);
             }
@@ -74,16 +77,48 @@ class ThumbsHelper
         return $res;
     }
 
-    private function checkThumbs($path, $file, $ext, $name)
+    private function checkThumbs($path, $file, $ext, $name, $tmp = false, $resizeMethod = null)
     {
-        if (!JFolder::exists($path . '/thumbs')) {
+        if ((!JFolder::exists($path . '/thumbs')) || (!JFile::exists($path . '/thumbs/' . $name . '_' . $this->size . '.' . $ext))) {
             $image = new JImage($path . '/' . $file);
-            $image->createThumbs($this->size, 1);
+            if (is_null($resizeMethod)) $resizeMethod = $this->resize_method;
+            switch ($resizeMethod) {
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    $thumbsFolder = null;
+                    if ($tmp == true) {
+                        $thumbsFolder = $path . '/../thumbs';
+                        $name = substr($name, 0, strrpos($name, '_'));
+                        JFile::move($image->getPath(), $path . '/' . $name . '.' . $ext);
+                        $image = new JImage($path . '/' . $name . '.' . $ext);
+                    }
+                    $image->createThumbs($this->size, $resizeMethod, $thumbsFolder);
+                    break;
+                case 5:
+                    self::twoWayResize($image, $path);
+                    break;
+                case 6:
+                    self::twoWayResize($image, $path, 3);
+                    break;
+                default:
+                    throw new InvalidArgumentException('Resize Method does not exist: ' . $this->resize_method);
+            }
         }
-        if (!JFile::exists($path . '/thumbs/' . $name . '_' . $this->size . '.' . $ext)) {
-            $image = new JImage($path . '/' . $file);
-            $image->createThumbs($this->size, 1);
+    }
+
+    private function twoWayResize($image, $path, $first_resize_method = 2)
+    {
+        $image->createThumbs($this->size, $first_resize_method, $path . '/tmp');
+        $absolut_path = $path . '/tmp';
+        $images = JFolder::files($absolut_path, '.', false, false, $this->image_excludes);
+        foreach ($images as $file) {
+            $ext = JFile::getExt($absolut_path . '/' . $file);
+            $name = basename($absolut_path . '/' . $file, '.' . $ext);
+            self::checkThumbs($path . '/tmp', $file, $ext, $name, true, 4);
         }
+        JFolder::delete($path . '/tmp');
     }
 
     public static function getActions()
@@ -100,4 +135,21 @@ class ThumbsHelper
 
         return $result;
     }
+
+    public static function insertJS()
+    {
+        $web = JApplicationWeb::getInstance();
+        if (!$web->client->mobile) {
+            $dispatcher = JDispatcher::getInstance();
+            $dispatcher->register('onBeforeCompileHead', 'triggerSchuWebScriptjQuery');
+        }
+    }
+}
+
+function triggerSchuWebScriptjQuery()
+{
+    $document = JFactory::getDocument();
+    $document->addStyleSheet(JUri::base() . 'media/com_schuweb_gallery/css/colorbox.css')
+        ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/colorbox/jquery.colorbox-min.js')
+        ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/schuweb_colorbox.js');
 }

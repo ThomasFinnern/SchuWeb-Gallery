@@ -15,3 +15,7 @@ JHtml::_('behavior.multiselect');
 JHtml::_('formbehavior.chosen', 'select');
 
 ?>
+<form action="<?php echo JRoute::_('index.php?option=com_schuweb_gallery'); ?>" method="post" name="adminForm"
+      id="adminForm">
+    <input type="hidden" name="task" value=""/>
+</form>

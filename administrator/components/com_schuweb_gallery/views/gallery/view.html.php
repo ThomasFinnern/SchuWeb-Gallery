@@ -23,6 +23,7 @@ class SchuWeb_GalleryViewGallery extends JViewLegacy
      */
     public function display($tpl = null)
     {
+        JToolbarHelper::title('SchuWeb Gallery');
         $this->addToolbar();
 
         parent::display($tpl);
@@ -35,6 +36,7 @@ class SchuWeb_GalleryViewGallery extends JViewLegacy
         if ($canDo->get('core.admin')) {
             JToolbarHelper::preferences('com_schuweb_gallery');
             JToolbarHelper::divider();
+            JToolbarHelper::custom('recreate', 'new', '', 'SCHUWEB_GALLERY_RECREATE_THUMBS', false);
         }
     }
 }

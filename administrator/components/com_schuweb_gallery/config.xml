@@ -21,6 +21,21 @@
                 description="SCHUWEB_GALLERY_THUMB_SIZE_DESC"
                 default="300x200"/>
         <field
+                name="resize_method"
+                type="list"
+                component="com_schuweb_gallery"
+                section="component"
+                label="SCHUWEB_GALLERY_THUMB_RESIZE_METHOD"
+                description="SCHUWEB_GALLERY_THUMB_RESIZE_METHOD_DESC"
+                >
+            <option value="1">SCHUWEB_GALLERY_SCALE_FILL</option>
+            <option value="2">SCHUWEB_GALLERY_SCALE_INSIDE</option>
+            <option value="3">SCHUWEB_GALLERY_SCALE_OUTSIDE</option>
+            <option value="4">SCHUWEB_GALLERY_CROP</option>
+            <option value="5">SCHUWEB_GALLERY_SCALE_INSIDE_CROP</option>
+            <option value="6">SCHUWEB_GALLERY_SCALE_OUTSIDE_CROP</option>
+        </field>
+        <field
                 name="spacer"
                 type="spacer"
                 hr="true"/>

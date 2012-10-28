@@ -17,7 +17,7 @@ defined('_JEXEC') or die;
            class="thumbnail">
             <img src="<?php echo $folder['image']['thumb']; ?>" alt="">
 
-            <h3><?php echo $folder['name']; ?></h3>
+            <h4><?php echo $folder['name']; ?></h4>
         </a>
     </li>
     <?php endforeach; ?>

@@ -121,21 +121,6 @@ class ThumbsHelper
         JFolder::delete($path . '/tmp');
     }
 
-    public static function getActions()
-    {
-        $user = JFactory::getUser();
-        $result = new JObject;
-
-        $actions = JAccess::getActionsFromFile(
-            JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/access.xml', "/access/section[@name='component']/");
-
-        foreach ($actions as $action) {
-            $result->set($action->name, $user->authorise($action->name, "com_schuweb_gallery"));
-        }
-
-        return $result;
-    }
-
     public static function insertJS()
     {
         $web = JApplicationWeb::getInstance();

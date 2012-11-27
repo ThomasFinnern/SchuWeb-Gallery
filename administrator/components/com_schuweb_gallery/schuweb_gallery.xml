@@ -33,8 +33,10 @@
         <menu link="option=com_schuweb_gallery" img="class:schuweb_gallery">SchuWeb Gallery</menu>
 
         <files folder="admin">
+            <folder>controllers</folder>
             <folder>helpers</folder>
             <folder>models</folder>
+            <folder>tables</folder>
             <folder>views</folder>
             <filename>access.xml</filename>
             <filename>config.xml</filename>

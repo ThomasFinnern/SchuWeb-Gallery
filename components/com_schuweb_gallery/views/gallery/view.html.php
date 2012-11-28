@@ -22,9 +22,9 @@ class SchuWeb_GalleryViewGallery extends JViewLegacy
         $thumbhelper = new ThumbsHelper();
         $input = JFactory::getApplication()->input;
 
-        $start_folder = $thumbhelper->getParams()->get('start_folder');
-        $this->folder_grid_size = $thumbhelper->getParams()->get('folder_grid_size');
-        $this->image_grid_size = $thumbhelper->getParams()->get('image_grid_size');
+        $start_folder = $thumbhelper->getParams()->get('start_folder', 'images');
+        $this->folder_grid_size = $thumbhelper->getParams()->get('folder_grid_size', '3');
+        $this->image_grid_size = $thumbhelper->getParams()->get('image_grid_size', '3');
         $entry_folder = $input->get('folder', null, 'STRING');
         if ($entry_folder) {
             $start_folder = preg_replace(array('/\:/', '/\./'), array('-', '/'), $entry_folder);

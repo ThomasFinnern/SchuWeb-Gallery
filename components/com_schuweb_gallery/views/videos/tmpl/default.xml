@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+    <layout title="SCHUWEB_GALLERY_VIDEOS_VIEW" option="SCHUWEB_GALLERY_VIDEOS_VIEW_OPTION">
+        <help
+                key="JHELP_MENUS_MENU_ITEM_SEARCH_RESULTS"
+                />
+        <message>
+            <![CDATA[SCHUWEB_GALLERY_VIDEOS_VIEW_DESC]]>
+        </message>
+    </layout>
+
+    <fields name="params">
+
+        <!-- Basic options. -->
+        <fieldset name="params"
+                  label="SCHUWEB_GALLERY_BASIC_OPTIONS_LABEL"
+                >
+            <field name="video_service"
+                   type="list"
+                   label="SCHUWEB_GALLERY_VIDEO_SERVICE"
+                    >
+                <option value="all">JALL</option>
+                <option value="SCHUWEB_GALLERY_VIMEO">SCHUWEB_GALLERY_VIMEO</option>
+                <option value="SCHUWEB_GALLERY_YOUTUBE">SCHUWEB_GALLERY_YOUTUBE</option>
+            </field>
+        </fieldset>
+    </fields>
+</metadata>

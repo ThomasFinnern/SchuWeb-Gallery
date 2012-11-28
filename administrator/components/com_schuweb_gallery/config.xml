@@ -72,6 +72,31 @@
                 label="COM_SCHUWEB_GALLERY_IMAGE_EXCLUDE_LABEL"
                 description="COM_SCHUWEB_GALLERY_IMAGE_EXCLUDE_DESC"/>
     </fieldset>
+    <fieldset name="video">
+        <field
+                name="video_grid_size"
+                type="integer"
+                first="0"
+                last="12"
+                step="1"
+                default="3"
+                label="SCHUWEB_GALLERY_VIDEO_GRID_BOOTSTRAP_SIZE_LABEL"
+                description="SCHUWEB_GALLERY_VIDEO_GRID_BOOTSTRAP_SIZE_DESC"/>
+        <field
+                name="video_width"
+                type="text"
+                component="com_schuweb_gallery"
+                section="component"
+                label="SCHUWEB_GALLERY_VIDEO_WIDTH"
+                default="300"/>
+        <field
+                name="video_height"
+                type="text"
+                component="com_schuweb_gallery"
+                section="component"
+                label="SCHUWEB_GALLERY_VIDEO_HEIGHT"
+                default="200"/>
+    </fieldset>
     <fieldset
             name="permissions"
             label="JCONFIG_PERMISSIONS_LABEL"

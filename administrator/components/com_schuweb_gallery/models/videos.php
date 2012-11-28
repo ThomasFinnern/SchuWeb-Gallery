@@ -18,6 +18,33 @@ defined('_JEXEC') or die;
 class SchuWeb_GalleryModelVideos extends JModelList
 {
     /**
+     * Constructor.
+     *
+     * @param	array	An optional associative array of configuration settings.
+     * @see		JController
+     * @since	1.6
+     */
+    public function __construct($config = array())
+    {
+        if (empty($config['filter_fields'])) {
+            $config['filter_fields'] = array(
+                'id', 'a.id',
+                'video_id', 'a.video_id',
+                'video_service', 'a.video_service',
+                'state', 'a.state',
+                'ordering', 'a.ordering',
+                'checked_out', 'a.checked_out',
+                'checked_out_time', 'a.checked_out_time',
+                'created', 'a.created',
+                'publish_up', 'a.publish_up',
+                'publish_down', 'a.publish_down',
+                'state',
+            );
+        }
+
+        parent::__construct($config);
+    }
+    /**
      * Returns a JTable object, always creating it.
      *
      * @param   string  $type    The table type to instantiate. [optional]
@@ -51,8 +78,14 @@ class SchuWeb_GalleryModelVideos extends JModelList
                 'a.id AS id, a.video_id AS video_id, a.video_service AS video_service,'.
                     'a.checked_out AS checked_out,'.
                     'a.checked_out_time AS checked_out_time,' .
+                    'a.publish_up, a.publish_down,'.
                     'a.state AS state, '.
-                    'a.publish_up, a.publish_down'
+                    'a.created AS created,'.
+                    'a.ordering AS ordering,'.
+                    'a.created_by AS created_by,'.
+                    'a.created_by_alias AS created_by_alias,'.
+                    'a.modified AS modified,'.
+                    'a.modified_by AS modified_by'
             )
         );
         $query->from($db->quoteName('#__schuweb_gallery_videos').' AS a');
@@ -76,20 +109,46 @@ class SchuWeb_GalleryModelVideos extends JModelList
                 $query->where('a.id = '.(int) substr($search, 3));
             } else {
                 $search = $db->Quote('%'.$db->escape($search, true).'%');
-                $query->where('(a.name LIKE '.$search.' OR a.alias LIKE '.$search.')');
+                $query->where('(a.video_id LIKE '.$search.')');
             }
         }
 
         // Add the list ordering clause.
-        /*$orderCol	= $this->state->get('list.ordering', 'ordering');
+        $orderCol	= $this->state->get('list.ordering', 'ordering');
         $orderDirn	= $this->state->get('list.direction', 'ASC');
         if ($orderCol == 'ordering' || $orderCol == 'category_title') {
-            $orderCol = 'c.title '.$orderDirn.', a.ordering';
+            $orderCol = 'a.video_id '.$orderDirn.', a.ordering';
         }
 
-        $query->order($db->escape($orderCol.' '.$orderDirn));*/
+        $query->order($db->escape($orderCol.' '.$orderDirn));
 
         //echo nl2br(str_replace('#__','jos_',$query));
         return $query;
+    }
+
+    /**
+     * Method to auto-populate the model state.
+     *
+     * Note. Calling getState in this method will result in recursion.
+     *
+     * @since	1.6
+     */
+    protected function populateState($ordering = null, $direction = null)
+    {
+        $app = JFactory::getApplication('administrator');
+
+        // Load the filter state.
+        $search = $this->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
+        $this->setState('filter.search', $search);
+
+        $state = $this->getUserStateFromRequest($this->context.'.filter.state', 'filter_state', '', 'string');
+        $this->setState('filter.state', $state);
+
+        // Load the parameters.
+        $params = JComponentHelper::getParams('com_schuweb_gallery');
+        $this->setState('params', $params);
+
+        // List state information.
+        parent::populateState('a.video_id', 'asc');
     }
 }

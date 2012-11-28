@@ -19,7 +19,15 @@ $user = JFactory::getUser();
 $userId = $user->get('id');
 $listOrder = $this->escape($this->state->get('list.ordering'));
 $listDirn = $this->escape($this->state->get('list.direction'));
+$archived	= $this->state->get('filter.published') == 2 ? true : false;
+$trashed	= $this->state->get('filter.published') == -2 ? true : false;
 $sortFields = $this->getSortFields();
+$saveOrder	= $listOrder == 'ordering';
+if ($saveOrder)
+{
+    $saveOrderingUrl = 'index.php?option=com_banners&task=banners.saveOrderAjax&tmpl=component';
+    JHtml::_('sortablelist.sortable', 'articleList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
+}
 
 ?>
 <script type="text/javascript">
@@ -49,11 +57,11 @@ $sortFields = $this->getSortFields();
     <div id="filter-bar" class="btn-toolbar">
         <div class="filter-search btn-group pull-left">
             <label for="filter_search"
-                   class="element-invisible"><?php echo JText::_('COM_BANNERS_SEARCH_IN_TITLE');?></label>
+                   class="element-invisible"><?php echo JText::_('SCHUWEB_GALLERY_SEARCH_IN_TITLE');?></label>
             <input type="text" name="filter_search" id="filter_search"
-                   placeholder="<?php echo JText::_('COM_BANNERS_SEARCH_IN_TITLE'); ?>"
+                   placeholder="<?php echo JText::_('SCHUWEB_GALLERY_SEARCH_IN_TITLE'); ?>"
                    value="<?php echo $this->escape($this->state->get('filter.search')); ?>"
-                   title="<?php echo JText::_('COM_BANNERS_SEARCH_IN_TITLE'); ?>"/>
+                   title="<?php echo JText::_('SCHUWEB_GALLERY_SEARCH_IN_TITLE'); ?>"/>
         </div>
         <div class="btn-group pull-left">
             <button type="submit" class="btn hasTooltip" title="<?php echo JText::_('JSEARCH_FILTER_SUBMIT'); ?>"><i
@@ -117,7 +125,7 @@ $sortFields = $this->getSortFields();
         </tfoot>
         <tbody>
         <?php foreach ($this->items as $i => $item) :
-            //$ordering = ($listOrder == 'ordering');
+            $ordering = ($listOrder == 'ordering');
             //$item->cat_link = JRoute::_('index.php?option=com_categories&extension=com_banners&task=edit&type=other&cid[]=' . $item->catid);
             //$canCreate = $user->authorise('core.create', 'com_banners.category.' . $item->catid);
             $canEdit = $user->authorise('core.edit', 'com_schuweb_gallery' . $item->id);
@@ -129,10 +137,10 @@ $sortFields = $this->getSortFields();
                 <?php if ($canChange) :
                 $disableClassName = '';
                 $disabledLabel = '';
-                //if (!$saveOrder) :
-                //    $disabledLabel = JText::_('JORDERINGDISABLED');
-                //    $disableClassName = 'inactive tip-top';
-                //endif;
+                if (!$saveOrder) :
+                    $disabledLabel = JText::_('JORDERINGDISABLED');
+                    $disableClassName = 'inactive tip-top';
+                endif;
                 ?>
                 <span class="sortable-handler hasTooltip <?php echo $disableClassName?>"
                       title="<?php echo $disabledLabel?>">
@@ -179,19 +187,19 @@ $sortFields = $this->getSortFields();
 
                     JHtml::_('dropdown.divider');
 
-                    /*if ($archived) :
+                    if ($archived) :
                         JHtml::_('dropdown.unarchive', 'cb' . $i, 'banners.'); else :
                         JHtml::_('dropdown.archive', 'cb' . $i, 'banners.');
-                    endif;*/
+                    endif;
 
                     if ($item->checked_out) :
                         JHtml::_('dropdown.checkin', 'cb' . $i, 'videos.');
                     endif;
 
-                    /*if ($trashed) :
-                        JHtml::_('dropdown.untrash', 'cb' . $i, 'banners.'); else :
-                        JHtml::_('dropdown.trash', 'cb' . $i, 'banners.');
-                    endif;*/
+                    if ($trashed) :
+                        JHtml::_('dropdown.untrash', 'cb' . $i, 'videos.'); else :
+                        JHtml::_('dropdown.trash', 'cb' . $i, 'videos.');
+                    endif;
 
                     // render dropdown list
                     echo JHtml::_('dropdown.render');

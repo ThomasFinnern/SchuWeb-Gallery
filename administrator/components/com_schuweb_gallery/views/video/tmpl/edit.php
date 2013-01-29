@@ -31,10 +31,10 @@ JHtml::_('formbehavior.chosen', 'select');
             <fieldset>
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#details"
-                                          data-toggle="tab"><?php echo JText::_('COM_BANNERS_BANNER_DETAILS');?></a>
+                                          data-toggle="tab"><?php echo JText::_('SCHUWEB_GALLERY_DETAILS');?></a>
                     </li>
                     <li><a href="#publishing"
-                           data-toggle="tab"><?php echo JText::_('COM_BANNERS_GROUP_LABEL_PUBLISHING_DETAILS');?></a>
+                           data-toggle="tab"><?php echo JText::_('SCHUWEB_GALLERY_PUBLISHING_DETAILS');?></a>
                     </li>
                 </ul>
                 <div class="tab-content">

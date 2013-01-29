@@ -9,6 +9,8 @@
 <project name="schuweb_gallery" default="build">
     <!-- Version number of build -->
     <property name="build.version" value="0.0.0" override="true" />
+    <!-- additional naming prefix -->
+    <property name="build.postfix" value="" override="true" />
     <!-- get the date for build -->
     <tstamp prefix="build.date" />
     <!-- Set the directory where the packages should be saved. Relative to the build dir -->
@@ -40,7 +42,7 @@
     </fileset>
 
     <target name="build" depends="prepare, copy, zipplugins">
-        <zip destfile="${builddir}/schuweb_gallery_${build.version}_${build.date.DSTAMP}.zip">
+        <zip destfile="${builddir}/schuweb_gallery_${build.postfix}${build.version}_${build.date.DSTAMP}.zip">
             <fileset dir="${builddir}/tmp">
                 <include name="**" />
             </fileset>
@@ -93,7 +95,7 @@
 
     <target name="zipplugins">
         <!-- zip the plugins -->
-        <zip destfile="${builddir}/tmp/admin/plugins/plg_schuweb_gallery_${build.version}_${build.date.DSTAMP}.zip">
+        <zip destfile="${builddir}/tmp/admin/plugins/plg_schuweb_gallery_${build.postfix}${build.version}_${build.date.DSTAMP}.zip">
             <fileset dir="${builddir}/tmp/admin/plugins">
                 <include name="schuweb_gallery/**" />
             </fileset>

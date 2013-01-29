@@ -29,6 +29,16 @@
         <folder>images</folder>
         <folder>js</folder>
     </media>
+    <install>
+        <sql>
+            <file driver="mysql" charset="utf8">install.sql</file>
+        </sql>
+    </install>
+    <uninstall>
+        <sql>
+            <file driver="mysql" charset="utf8">uninstall.sql</file>
+        </sql>
+    </uninstall>
     <administration>
         <menu link="option=com_schuweb_gallery" img="class:schuweb_gallery">SchuWeb Gallery</menu>
 
@@ -42,7 +52,9 @@
             <filename>config.xml</filename>
             <filename>controller.php</filename>
             <filename>index.html</filename>
+            <filename>install.sql</filename>
             <filename>schuweb_gallery.php</filename>
+            <filename>uninstall.sql</filename>
         </files>
         <languages folder="admin">
             <language tag="en-GB">language/en-GB/en-GB.com_schuweb_gallery.ini</language>

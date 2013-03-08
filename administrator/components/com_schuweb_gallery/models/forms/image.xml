@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+    <fieldset name="details">
+        <field name="file" type="text" default="" readonly="true" class="readonly" label="SCHUWEB_GALLERY_FILE_LABEL"/>
+        <field name="path" type="text" default="" readonly="true" class="readonly" label="SCHUWEB_GALLERY_PATH_LABEL"/>
+        <field name="tags" type="sql" key_field="id" value_field="name" label="SCHUWEB_GALLERY_TAGS" multiple="true"
+               query="SELECT * FROM #__schuweb_gallery_tags"></field>
+    </fieldset>
+</form>

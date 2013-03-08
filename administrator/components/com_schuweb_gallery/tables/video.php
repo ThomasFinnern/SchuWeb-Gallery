@@ -18,6 +18,14 @@ defined('_JEXEC') or die;
  */
 class SchuWeb_GalleryTableVideo extends JTable
 {
+    protected $id;
+
+    protected $video_service;
+
+    protected $video_id;
+
+    protected $tags;
+
 	/**
 	 * Constructor
 	 *
@@ -95,5 +103,41 @@ class SchuWeb_GalleryTableVideo extends JTable
             }
         }
         return count($this->getErrors()) == 0;
+    }
+
+    public function store($updateNulls = false)
+    {
+        $k = $this->_tbl_key;
+
+        if (0 == $this->$k)
+        {
+            $this->$k = null;
+        }
+
+        // If a primary key exists update the object, otherwise insert it.
+        if ($this->$k)
+        {
+            //Update the video table
+            $query = $this->_db->getQuery(true);
+            $query->update($this->_tbl);
+            foreach (get_object_vars($this) as $k => $v) {
+                if ( $v !== null && $k != $this->_tbl_key && $k[0] != '_') {
+                    $query->set($this->_db->quoteName($k).'='.$this->_db->quote($v));
+                }
+            }
+            $query->where($this->_db->quoteName($this->_tbl_key).'='.$this->_db->quote($this->id));
+
+            $this->_db->setQuery($query);
+
+            $this->_db->execute();
+
+            //$this->_db->updateObject($this->_tbl, $this, $this->_tbl_key, $updateNulls);
+        }
+        else
+        {
+            $this->_db->insertObject($this->_tbl, $this, $this->_tbl_key);
+        }
+
+        return true;
     }
 }

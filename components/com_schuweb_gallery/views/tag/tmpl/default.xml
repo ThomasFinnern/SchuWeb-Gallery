@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+    <layout title="SCHUWEB_GALLERY_TAG_VIEW" option="SCHUWEB_GALLERY_TAG_VIEW_OPTION">
+        <help
+                key="JHELP_MENUS_MENU_ITEM_SEARCH_RESULTS"
+                />
+        <message>
+            <![CDATA[SCHUWEB_GALLERY_TAG_VIEW_DESC]]>
+        </message>
+    </layout>
+
+    <fields name="params">
+
+        <!-- Basic options. -->
+        <fieldset name="params"
+                  label="SCHUWEB_GALLERY_BASIC_OPTIONS_LABEL"
+                >
+            <field name="tag" type="sql" key_field="id" value_field="name" label="SCHUWEB_GALLERY_TAGS"
+                   query="SELECT * FROM #__schuweb_gallery_tags">
+            </field>
+        </fieldset>
+    </fields>
+</metadata>

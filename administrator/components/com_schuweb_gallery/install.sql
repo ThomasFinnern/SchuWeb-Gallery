@@ -20,3 +20,24 @@ CREATE TABLE IF NOT EXISTS `#__schuweb_gallery_videos` (
   KEY `video_service` (`video_service`),
   KEY `state` (`state`)
 );
+
+CREATE TABLE IF NOT EXISTS `#__schuweb_gallery_image_tags` (
+  `tagid` int(11) NOT NULL,
+  `path` varchar(155) NOT NULL,
+  UNIQUE KEY `tagid` (`tagid`,`path`),
+  KEY `path` (`path`)
+);
+
+CREATE TABLE IF NOT EXISTS `#__schuweb_gallery_tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+);
+
+CREATE TABLE IF NOT EXISTS `#__schuweb_gallery_video_tags` (
+  `tagid` int(11) NOT NULL,
+  `videoid` int(11) NOT NULL,
+  UNIQUE KEY `tagid` (`tagid`,`videoid`),
+  KEY `videoid` (`videoid`)
+);

@@ -11,7 +11,7 @@ defined('_JEXEC') or die;
 
 require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/gallery.php');
 
-class SchuWeb_GalleryViewVideos extends JViewLegacy
+class SchuWeb_GalleryViewTags extends JViewLegacy
 {
     protected $state;
 
@@ -40,42 +40,16 @@ class SchuWeb_GalleryViewVideos extends JViewLegacy
         if ($canDo->get('core.admin')) {
             JToolbarHelper::preferences('com_schuweb_gallery');
             JToolbarHelper::divider();
-            JToolbarHelper::addNew('video.add');
+            JToolbarHelper::addNew('tag.add');
         }
 
         if ($canDo->get('core.edit')) {
-            JToolbarHelper::editList('video.edit');
-        }
-
-        if ($canDo->get('core.edit.state'))
-        {
-            if ($this->state->get('filter.state') != 2)
-            {
-                JToolbarHelper::publish('videos.publish', 'JTOOLBAR_PUBLISH', true);
-                JToolbarHelper::unpublish('videos.unpublish', 'JTOOLBAR_UNPUBLISH', true);
-            }
-
-            if ($this->state->get('filter.state') != -1)
-            {
-                if ($this->state->get('filter.state') != 2)
-                {
-                    JToolbarHelper::archiveList('videos.archive');
-                }
-                elseif ($this->state->get('filter.state') == 2)
-                {
-                    JToolbarHelper::unarchiveList('videos.publish');
-                }
-            }
-        }
-
-        if ($canDo->get('core.edit.state'))
-        {
-            JToolbarHelper::checkin('videos.checkin');
+            JToolbarHelper::editList('tag.edit');
         }
 
         if ($this->state->get('filter.state') == -2 && $canDo->get('core.delete'))
         {
-            JToolbarHelper::deleteList('', 'videos.delete', 'JTOOLBAR_EMPTY_TRASH');
+            JToolbarHelper::deleteList('', 'tags.delete', 'JTOOLBAR_EMPTY_TRASH');
         }
         elseif ($canDo->get('core.edit.state')) {
             JToolbarHelper::trash();
@@ -84,9 +58,11 @@ class SchuWeb_GalleryViewVideos extends JViewLegacy
 
         JHtmlSidebar::addEntry(JText::_('SCHUWEB_GALLERY_CP'),'index.php?option=com_schuweb_gallery');
 
-        JHtmlSidebar::addEntry(JText::_('SCHUWEB_GALLERY_VIDEOS'),'index.php?option=com_schuweb_gallery&view=videos', true);
+        JHtmlSidebar::addEntry(JText::_('SCHUWEB_GALLERY_IMAGES'), 'index.php?option=com_schuweb_gallery&view=images');
 
-        JHtmlSidebar::addEntry(JText::_('SCHUWEB_GALLERY_TAGS'), 'index.php?option=com_schuweb_gallery&view=tags');
+        JHtmlSidebar::addEntry(JText::_('SCHUWEB_GALLERY_VIDEOS'),'index.php?option=com_schuweb_gallery&view=videos');
+
+        JHtmlSidebar::addEntry(JText::_('SCHUWEB_GALLERY_TAGS'), 'index.php?option=com_schuweb_gallery&view=tags', true);
 
         JHtmlSidebar::addFilter(
             JText::_('JOPTION_SELECT_PUBLISHED'),
@@ -104,10 +80,9 @@ class SchuWeb_GalleryViewVideos extends JViewLegacy
     protected function getSortFields()
     {
         return array(
-            'ordering' => JText::_('JGRID_HEADING_ORDERING'),
-            'a.state' => JText::_('JSTATUS'),
-            'a.video_id' => JText::_('SCHUWEB_GALLERY_VIDEOID'),
-            'a.video_service' => JText::_('SCHUWEB_GALLERY_VIDEO_SERVICE'),
+            //'ordering' => JText::_('JGRID_HEADING_ORDERING'),
+            //'a.state' => JText::_('JSTATUS'),
+            'a.name' => JText::_('SCHUWEB_GALLERY_TAG_NAME'),
             'a.id' => JText::_('JGRID_HEADING_ID')
         );
     }

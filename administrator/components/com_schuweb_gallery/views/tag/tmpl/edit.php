@@ -17,14 +17,14 @@ JHtml::_('formbehavior.chosen', 'select');
 ?>
 <script type="text/javascript">
     Joomla.submitbutton = function (task) {
-        if (task == 'video.cancel' || document.formvalidator.isValid(document.id('video-form'))) {
-            Joomla.submitform(task, document.getElementById('video-form'));
+        if (task == 'tag.cancel' || document.formvalidator.isValid(document.id('tag-form'))) {
+            Joomla.submitform(task, document.getElementById('tag-form'));
         }
     }
 </script>
 
 <form action="<?php echo JRoute::_('index.php?option=com_schuweb_gallery&layout=edit&id=' . (int)$this->item->id); ?>"
-      method="post" name="adminForm" id="video-form" class="form-validate  form-horizontal">
+      method="post" name="adminForm" id="tag-form" class="form-validate  form-horizontal">
     <div class="row-fluid">
         <!-- Begin Content -->
         <div class="span10 form-horizontal">
@@ -33,35 +33,16 @@ JHtml::_('formbehavior.chosen', 'select');
                     <li class="active"><a href="#details"
                                           data-toggle="tab"><?php echo JText::_('SCHUWEB_GALLERY_DETAILS');?></a>
                     </li>
-                    <li><a href="#publishing"
-                           data-toggle="tab"><?php echo JText::_('SCHUWEB_GALLERY_PUBLISHING_DETAILS');?></a>
-                    </li>
                 </ul>
                 <div class="tab-content">
                     <!-- Begin Tabs -->
                     <div class="tab-pane active" id="details">
                         <div class="control-group">
                             <div class="control-label">
-                                <?php echo $this->form->getLabel("video_id"); ?>
+                                <?php echo $this->form->getLabel('name'); ?>
                             </div>
                             <div class="controls">
-                                <?php echo $this->form->getInput("video_id"); ?>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <div class="control-label">
-                                <?php echo $this->form->getLabel("video_service"); ?>
-                            </div>
-                            <div class="controls">
-                                <?php echo $this->form->getInput("video_service"); ?>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <div class="control-label">
-                                <?php echo $this->form->getLabel("tags"); ?>
-                            </div>
-                            <div class="controls">
-                                <?php echo $this->form->getInput("tags"); ?>
+                                <?php echo $this->form->getInput('name'); ?>
                             </div>
                         </div>
                         <div class="control-group">
@@ -72,19 +53,6 @@ JHtml::_('formbehavior.chosen', 'select');
                                 <?php echo $this->form->getInput('id'); ?>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="tab-pane" id="publishing">
-                        <?php foreach ($this->form->getFieldset('publish') as $field): ?>
-                        <div class="control-group">
-                            <div class="control-label">
-                                <?php echo $field->label; ?>
-                            </div>
-                            <div class="controls">
-                                <?php echo $field->input; ?>
-                            </div>
-                        </div>
-                        <?php endforeach; ?>
                     </div>
                 </div>
             </fieldset>
@@ -103,22 +71,6 @@ JHtml::_('formbehavior.chosen', 'select');
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <div class="control-label">
-                        <?php echo $this->form->getLabel('state'); ?>
-                    </div>
-                    <div class="controls">
-                        <?php echo $this->form->getInput('state'); ?>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <div class="control-label">
-                        <?php echo $this->form->getLabel('sticky'); ?>
-                    </div>
-                    <div class="controls">
-                        <?php echo $this->form->getInput('sticky'); ?>
-                    </div>
-                </div>
                 <div class="control-group">
                     <div class="control-label">
                         <?php echo $this->form->getLabel('language'); ?>

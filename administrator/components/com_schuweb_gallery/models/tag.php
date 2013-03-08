@@ -13,10 +13,10 @@ defined('_JEXEC') or die;
  * Filter model class for Finder.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_finder
+ * @subpackage  com_schuweb_gallery
  * @since       2.5
  */
-class SchuWeb_GalleryModelVideo extends JModelAdmin
+class SchuWeb_GalleryModelTag extends JModelAdmin
 {
     /**
      * The prefix to use with controller messages.
@@ -32,7 +32,7 @@ class SchuWeb_GalleryModelVideo extends JModelAdmin
      * @var    string
      * @since  2.5
      */
-    protected $context = 'com_schuweb_gallery.video';
+    protected $context = 'com_schuweb_gallery.tag';
 
     /**
      * Returns a JTable object, always creating it.
@@ -45,7 +45,7 @@ class SchuWeb_GalleryModelVideo extends JModelAdmin
      *
      * @since   1.6
      */
-    public function getTable($type = 'Video', $prefix = 'SchuWeb_GalleryTable', $config = array())
+    public function getTable($type = 'Tag', $prefix = 'SchuWeb_GalleryTable', $config = array())
     {
         return JTable::getInstance($type, $prefix, $config);
     }
@@ -63,7 +63,7 @@ class SchuWeb_GalleryModelVideo extends JModelAdmin
     public function getForm($data = array(), $loadData = true)
     {
         // Get the form.
-        $form = $this->loadForm('com_schuweb_gallery.video', 'video', array('control' => 'jform', 'load_data' => $loadData));
+        $form = $this->loadForm('com_schuweb_gallery.tag', 'tag', array('control' => 'jform', 'load_data' => $loadData));
 
         if (empty($form))
         {
@@ -93,39 +93,6 @@ class SchuWeb_GalleryModelVideo extends JModelAdmin
         return $form;
     }
 
-    public function save($data)
-    {
-        $tags = $data['tags'];
-        $id = $data['id'];
-
-        unset($data['tags']);
-
-        if (parent::save($data)) {
-
-            $table = $this->getTable('VideoTags');
-            $table->update($tags, $id);
-        }
-
-        return true;
-    }
-
-    public function getItem($pk = null) {
-        $item = parent::getItem($pk);
-
-        $tagsTable = JTable::getInstance("VideoTags", "SchuWeb_GalleryTable", array());
-        $res = $tagsTable->loadItemTags($item->id);
-
-        $tags = array();
-
-        foreach ( $res as $v) {
-            $tags[] = $v['tagid'];
-        }
-
-        $item->tags = $tags;
-
-        return $item;
-    }
-
     /**
      * Method to get the data that should be injected in the form.
      *
@@ -135,7 +102,7 @@ class SchuWeb_GalleryModelVideo extends JModelAdmin
     protected function loadFormData()
     {
         // Check the session for previously entered form data.
-        $data = JFactory::getApplication()->getUserState('com_schuweb_gallery.edit.video.data', array());
+        $data = JFactory::getApplication()->getUserState('com_schuweb_gallery.edit.tags.data', array());
 
         if (empty($data))
         {
@@ -144,5 +111,4 @@ class SchuWeb_GalleryModelVideo extends JModelAdmin
         }
         return $data;
     }
-
 }

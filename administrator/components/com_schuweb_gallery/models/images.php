@@ -16,117 +16,83 @@ defined('_JEXEC') or die;
  * @subpackage  com_finder
  * @since       2.5
  */
-class Schuweb_galleryModelImages extends JModelAdmin
+require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/thumbs.php');
+
+class Schuweb_galleryModelImages extends JModelList
 {
-    /**
-     * The prefix to use with controller messages.
-     *
-     * @var    string
-     * @since  2.5
-     */
-    protected $text_prefix = 'COM_SCHUWEB_GALLERY';
-
-    /**
-     * Model context string.
-     *
-     * @var    string
-     * @since  2.5
-     */
-    protected $context = 'com_schuweb_gallery.images';
-
-    /**
-     * Method to get the record form.
-     *
-     * @param   array    $data      Data for the form. [optional]
-     * @param   boolean  $loadData  True if the form is to load its own data (default case), false if not. [optional]
-     *
-     * @return  mixed  A JForm object on success, false on failure
-     *
-     * @since   2.5
-     */
-    public function getForm($data = array(), $loadData = false)
+    function getItems()
     {
-        // Get the form.
-        $form = $this->loadForm('com_schuweb_gallery.images', 'images', array('control' => 'jform', 'load_data' => $loadData));
+        $params = JComponentHelper::getParams('com_schuweb_gallery');
 
-        if (empty($form))
-        {
-            return false;
+        $base = JFactory::getApplication()->input->get('folderlist',null, null);
+
+        if (empty($base)){
+            $base = $params->get('start_folder');
+        }else{
+            $base = $params->get('start_folder').'/'.$base;
         }
 
-        return $form;
+        $thumbhelper = new ThumbsHelper();
+        $image_excludes = $thumbhelper->getImage_excludes();
+
+        return JFolder::files(JPATH_ROOT . '/' . $base, '.', false, false, $image_excludes);
     }
 
-    function getFolderList($base = null)
+    function getFolders($base = null, $xhtml = true)
     {
+
+        $selected = JFactory::getApplication()->input->get('folderlist', null, null);
+
         // Get some paths from the request
         if (empty($base)) {
-            $base = JPATH_ROOT.'/images';
+            $params = JComponentHelper::getParams('com_schuweb_gallery');
+            $base = $params->get('start_folder');
         }
+
         //corrections for windows paths
         $base = str_replace(DIRECTORY_SEPARATOR, '/', $base);
-        $com_media_base_uni = str_replace(DIRECTORY_SEPARATOR, '/', JPATH_ROOT.'/images');
+        $com_media_base_uni = str_replace(DIRECTORY_SEPARATOR, '/', JPATH_ROOT . '/images');
+
+        $thumbhelper = new ThumbsHelper();
+        $folder_excludes = $thumbhelper->getFolder_excludes();
 
         // Get the list of folders
         jimport('joomla.filesystem.folder');
-        $folders = JFolder::folders($base, '.', true, true);
+        $folders = JFolder::folders(JPATH_ROOT . '/' .$base, '.', true, true, $folder_excludes);
+        //$document = JFactory::getDocument();
+        //$document->setTitle(JText::_('COM_MEDIA_INSERT_IMAGE'));
 
-        $document = JFactory::getDocument();
-        $document->setTitle(JText::_('COM_MEDIA_INSERT_IMAGE'));
+        if ($xhtml) {
+            // Build the array of select options for the folder list
+            $options[] = JHtml::_('select.option', "", "/");
 
-        // Build the array of select options for the folder list
-        $options[] = JHtml::_('select.option', "", "/");
+            foreach ($folders as $folder) {
+                $folder = str_replace($com_media_base_uni, "", str_replace(DIRECTORY_SEPARATOR, '/', $folder));
+                $value = substr($folder, 1);
+                $text = str_replace(DIRECTORY_SEPARATOR, "/", $folder);
+                $options[] = JHtml::_('select.option', $value, $text);
+            }
 
-        foreach ($folders as $folder)
-        {
-            $folder		= str_replace($com_media_base_uni, "", str_replace(DIRECTORY_SEPARATOR, '/', $folder));
-            $value		= substr($folder, 1);
-            $text		= str_replace(DIRECTORY_SEPARATOR, "/", $folder);
-            $options[]	= JHtml::_('select.option', $value, $text);
+            // Sort the folder list array
+            if (is_array($options)) {
+                sort($options);
+            }
+
+            // Create the drop-down folder select list
+            $list = JHtml::_('select.genericlist', $options, 'folderlist', 'class="inputbox folderlist" size="1" onchange="this.form.submit()" ', 'value', 'text', $selected);
+
+            return $list;
         }
 
-        // Sort the folder list array
-        if (is_array($options)) {
-            sort($options);
-        }
-
-        // Get asset and author id (use integer filter)
-        $input = JFactory::getApplication()->input;
-        $asset = $input->get('asset', 0, 'integer');
-        $author = $input->get('author', 0, 'integer');
-
-        // Create the drop-down folder select list
-        $list = JHtml::_('select.genericlist', $options, 'folderlist', 'class="inputbox folderlist" size="1" onchange="SchuWebGallery.setFolder(this.options[this.selectedIndex].value, '.$asset.', '.$author.')" ', 'value', 'text', $base);
-
-        return $list;
-    }
-
-    /**
-     * Method to get the data that should be injected in the form.
-     *
-     * @return  mixed  The data for the form.
-     *
-     * @since   2.5
-     */
-    protected function loadFormData()
-    {
-        // Check the session for previously entered form data.
-       // $data = JFactory::getApplication()->getUserState('com_schuweb_gallery.images.data', array());
-
-        if (empty($data))
-        {
-            $data = $this->getItem();
-        }
-        return $data;
+        return $folders;
     }
 
     public function getState($property = null, $default = null)
     {
         static $set;
 
-        if (!$set)
-        {
-            $input  = JFactory::getApplication()->input;
+        if (!$set) {
+            $input = JFactory::getApplication()->input;
             $folder = $input->get('folder', '', 'path');
             $this->setState('folder', $folder);
 

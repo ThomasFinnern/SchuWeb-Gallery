@@ -8,12 +8,7 @@
     <authorEmail>info@schultschik.de</authorEmail>
     <authorUrl>extensions.schultschik.de</authorUrl>
     <version>sw.build.version</version>
-    <description>COM_SCHUWEB_GALLERY_XML_DESCRIPTION <![CDATA[
-            <strong>Used scripts: </strong>
-            <ul>
-                 <li><a href="http://www.jacklmoore.com/colorbox" title="Colorbox Website">Colorbox</a> by Jack Moore</li>
-            </ul>
-            ]]>
+    <description><![CDATA[COM_SCHUWEB_GALLERY_XML_DESCRIPTION]]>
     </description>
 
     <files folder="site">

@@ -184,7 +184,7 @@ class SchuWeb_GalleryControllerImage extends JControllerForm
                 // Redirect to the list screen.
                 $this->setRedirect(
                     JRoute::_(
-                        'index.php?option=' . $this->option . '&view=' . $this->view_list
+                        'index.php?option=' . $this->option . '&view=' . $this->view_list .'&folderlist=' . $data['path']
                             . $this->getRedirectToListAppend(), false
                     )
                 );
@@ -196,5 +196,22 @@ class SchuWeb_GalleryControllerImage extends JControllerForm
 
         return true;
     }
+
+    public function cancel($key = null)
+    {
+        JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+        $data  = $this->input->post->get('jform', array(), 'array');
+
+        $this->setRedirect(
+            JRoute::_(
+                'index.php?option=' . $this->option . '&view=' . $this->view_list  .'&folderlist=' . $data['path']
+                    . $this->getRedirectToListAppend(), false
+            )
+        );
+
+        return true;
+    }
+
 
 }

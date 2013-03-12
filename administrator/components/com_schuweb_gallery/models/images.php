@@ -27,9 +27,9 @@ class Schuweb_galleryModelImages extends JModelList
         $base = JFactory::getApplication()->input->get('folderlist',null, null);
 
         if (empty($base)){
-            $base = $params->get('start_folder');
+            $base = $params->get('start_folder', 'images');
         }else{
-            $base = $params->get('start_folder').'/'.$base;
+            $base = $params->get('start_folder', 'images').'/'.$base;
         }
 
         $thumbhelper = new ThumbsHelper();

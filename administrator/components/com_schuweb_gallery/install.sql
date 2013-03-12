@@ -23,9 +23,11 @@ CREATE TABLE IF NOT EXISTS `#__schuweb_gallery_videos` (
 
 CREATE TABLE IF NOT EXISTS `#__schuweb_gallery_image_tags` (
   `tagid` int(11) NOT NULL,
-  `path` varchar(155) NOT NULL,
-  UNIQUE KEY `tagid` (`tagid`,`path`),
-  KEY `path` (`path`)
+  `path` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  UNIQUE KEY `tagid` (`tagid`,`path`,`image`),
+  KEY `path` (`path`),
+  KEY `image` (`image`)
 );
 
 CREATE TABLE IF NOT EXISTS `#__schuweb_gallery_tags` (

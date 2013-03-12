@@ -8,8 +8,7 @@
     <authorEmail>info@schultschik.de</authorEmail>
     <authorUrl>extensions.schultschik.de</authorUrl>
     <version>sw.build.version</version>
-    <description><![CDATA[COM_SCHUWEB_GALLERY_XML_DESCRIPTION]]>
-    </description>
+    <description><![CDATA[COM_SCHUWEB_GALLERY_XML_DESCRIPTION]]></description>
 
     <files folder="site">
         <folder>views</folder>

@@ -106,8 +106,15 @@ class SchuWeb_GalleryModelVideo extends JModelAdmin
 
         if (parent::save($data)) {
 
+            if ($id == 0) {
+                $table = $this->getTable('Video');
+                $id = $table->getID($data);
+            }
+
             $table = $this->getTable('VideoTags');
             $table->update($tags, $id);
+        } else {
+            return false;
         }
 
         return true;

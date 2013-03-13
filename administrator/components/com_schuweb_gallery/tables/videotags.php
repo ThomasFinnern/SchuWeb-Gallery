@@ -32,14 +32,18 @@ class SchuWeb_GalleryTableVideoTags extends JTable
 
     public function loadItemTags($videoid)
     {
-        $query = $this->_db->getQuery(true);
-        $query->select('tagid')
-            ->from($this->_tbl)
-            ->where('videoid=' . $this->_db->quote($videoid));
+        if ($videoid) {
+            $query = $this->_db->getQuery(true);
+            $query->select('tagid')
+                ->from($this->_tbl)
+                ->where('videoid=' . $this->_db->quote($videoid));
 
-        $this->_db->setQuery($query);
+            $this->_db->setQuery($query);
 
-        return $this->_db->loadAssocList();
+            return $this->_db->loadAssocList();
+        }
+
+        return array();
 
     }
 

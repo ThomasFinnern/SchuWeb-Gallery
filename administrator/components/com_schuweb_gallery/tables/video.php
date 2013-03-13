@@ -18,13 +18,13 @@ defined('_JEXEC') or die;
  */
 class SchuWeb_GalleryTableVideo extends JTable
 {
-    protected $id;
+    var $id;
 
-    protected $video_service;
+    var $video_service;
 
-    protected $video_id;
+    var $video_id;
 
-    protected $tags;
+    var $tags;
 
 	/**
 	 * Constructor
@@ -139,5 +139,19 @@ class SchuWeb_GalleryTableVideo extends JTable
         }
 
         return true;
+    }
+
+    public function getID($data){
+        $query = $this->_db->getQuery(true);
+        $query->select($this->_tbl_key)
+            ->from($this->_tbl)
+            ->where('video_id='.$this->_db->quote($data['video_id']))
+            ->where('video_service='.$this->_db->quote($data['video_service']));
+
+        $this->_db->setQuery($query);
+
+        $id = $this->_db->loadAssoc();
+
+        return $id['id'];
     }
 }

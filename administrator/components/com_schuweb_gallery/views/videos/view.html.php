@@ -59,30 +59,32 @@ class SchuWeb_GalleryViewVideos extends JViewLegacy
             {
                 if ($this->state->get('filter.state') != 2)
                 {
-                    JToolbarHelper::archiveList('videos.archive');
+                 //   JToolbarHelper::archiveList('videos.archive');
                 }
                 elseif ($this->state->get('filter.state') == 2)
                 {
-                    JToolbarHelper::unarchiveList('videos.publish');
+                 //   JToolbarHelper::unarchiveList('videos.publish');
                 }
             }
         }
 
         if ($canDo->get('core.edit.state'))
         {
-            JToolbarHelper::checkin('videos.checkin');
+          //  JToolbarHelper::checkin('videos.checkin');
         }
 
         if ($this->state->get('filter.state') == -2 && $canDo->get('core.delete'))
         {
-            JToolbarHelper::deleteList('', 'videos.delete', 'JTOOLBAR_EMPTY_TRASH');
+          //  JToolbarHelper::deleteList('', 'videos.delete', 'JTOOLBAR_EMPTY_TRASH');
         }
         elseif ($canDo->get('core.edit.state')) {
-            JToolbarHelper::trash();
+          //  JToolbarHelper::trash();
         }
 
 
         JHtmlSidebar::addEntry(JText::_('SCHUWEB_GALLERY_CP'),'index.php?option=com_schuweb_gallery');
+
+        JHtmlSidebar::addEntry(JText::_('SCHUWEB_GALLERY_IMAGES'), 'index.php?option=com_schuweb_gallery&view=images');
 
         JHtmlSidebar::addEntry(JText::_('SCHUWEB_GALLERY_VIDEOS'),'index.php?option=com_schuweb_gallery&view=videos', true);
 

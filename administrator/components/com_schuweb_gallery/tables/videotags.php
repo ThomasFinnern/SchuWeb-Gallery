@@ -30,11 +30,12 @@ class SchuWeb_GalleryTableVideoTags extends JTable
         $this->created = $date->toSql();
     }
 
-    public function loadItemTags($videoid){
+    public function loadItemTags($videoid)
+    {
         $query = $this->_db->getQuery(true);
         $query->select('tagid')
             ->from($this->_tbl)
-            ->where('videoid='.$this->_db->quote($videoid));
+            ->where('videoid=' . $this->_db->quote($videoid));
 
         $this->_db->setQuery($query);
 
@@ -42,7 +43,7 @@ class SchuWeb_GalleryTableVideoTags extends JTable
 
     }
 
-    public function update($tags, $id)
+    public function update($tags = array(), $id)
     {
         $query = $this->_db->getQuery(true);
         $query->select('*')
@@ -59,22 +60,21 @@ class SchuWeb_GalleryTableVideoTags extends JTable
             for ($i = 0; $i < count($res); $i++) {
                 $obj = $res[$i];
                 $key = array_search($obj->tagid, $tags);
-
                 if ($key === FALSE) {
                     $this->deleteObject($obj);
                 } else {
                     unset($tags[$key]);
                 }
             }
+        }
 
-            //insert the tags array into table
-            foreach ($tags as $k => $v) {
-                $obj = new JObject();
-                $obj->tagid = $v;
-                $obj->videoid = $id;
+        //insert the tags array into table
+        foreach ($tags as $k => $v) {
+            $obj = new JObject();
+            $obj->tagid = $v;
+            $obj->videoid = $id;
 
-                $this->_db->insertObject($this->_tbl, $obj);
-            }
+            $this->_db->insertObject($this->_tbl, $obj);
         }
 
         return true;

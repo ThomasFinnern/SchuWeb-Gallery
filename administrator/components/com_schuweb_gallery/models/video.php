@@ -96,6 +96,10 @@ class SchuWeb_GalleryModelVideo extends JModelAdmin
     public function save($data)
     {
         $tags = $data['tags'];
+
+        if (!is_array($tags)) {
+            $tags = array($tags);
+        }
         $id = $data['id'];
 
         unset($data['tags']);

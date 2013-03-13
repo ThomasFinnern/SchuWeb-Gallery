@@ -54,28 +54,28 @@ class SchuWeb_GalleryViewVideo extends JViewLegacy
 
         // For new records, check the create permission.
         if ($isNew && (count($user->getAuthorisedCategories('com_schuweb_gallery', 'core.create')) > 0)) {
-            JToolbarHelper::apply('video.apply');
+          //  JToolbarHelper::apply('video.apply');
             JToolbarHelper::save('video.save');
-            JToolbarHelper::save2new('video.save2new');
+          //JToolbarHelper::save2new('video.save2new');
             JToolbarHelper::cancel('video.cancel');
         } else {
             // Can't save the record if it's checked out.
             if (!$checkedOut) {
                 // Since it's an existing record, check the edit permission, or fall back to edit own if the owner.
                 if ($canDo->get('core.edit') || ($canDo->get('core.edit.own') && $this->item->created_by == $userId)) {
-                    JToolbarHelper::apply('video.apply');
+          //          JToolbarHelper::apply('video.apply');
                     JToolbarHelper::save('video.save');
 
                     // We can save this record, but check the create permission to see if we can return to make a new one.
                     if ($canDo->get('core.create')) {
-                        JToolbarHelper::save2new('video.save2new');
+            //            JToolbarHelper::save2new('video.save2new');
                     }
                 }
             }
 
             // If checked out, we can still save
             if ($canDo->get('core.create')) {
-                JToolbarHelper::save2copy('video.save2copy');
+              //  JToolbarHelper::save2copy('video.save2copy');
             }
 
             JToolbarHelper::cancel('video.cancel', 'JTOOLBAR_CLOSE');

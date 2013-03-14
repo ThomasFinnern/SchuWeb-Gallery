@@ -19,12 +19,16 @@ function SchuWeb_GalleryBuildRoute(&$query)
 {
     $segments = array();
     if (isset($query['view'])) {
-        //$segments[] = $query['view'];
+        $segments[] = $query['view'];
         unset($query['view']);
     }
     if (isset($query['folder'])) {
-        $segments[] = preg_replace(array('/\.\./','/\./'), array('-','/'), $query['folder']);
+        $segments[] = preg_replace(array('/\.\./', '/\./'), array('-', '/'), $query['folder']);
         unset($query['folder']);
+    }
+    if (isset($query['tagid'])) {
+        $segments [] = $query['tagid'];
+        unset($query['tagid']);
     }
 
     return $segments;
@@ -41,15 +45,21 @@ function SchuWeb_GalleryBuildRoute(&$query)
 function SchuWeb_GalleryParseRoute($segments)
 {
     $vars = array();
-    $vars['view'] = 'gallery';
-    $folders = null;
-    foreach ($segments as $segment) {
-        if (is_null($folders)) {
-            $folders = $segment;
-        } else {
-            $folders .= '.' . $segment;
+    $vars['view'] = $segments[0];
+    unset($segments[0]);
+    if ($vars['view'] == 'gallery') {
+        $folders = null;
+        foreach ($segments as $segment) {
+            if (is_null($folders)) {
+                $folders = $segment;
+            } else {
+                $folders .= '.' . $segment;
+            }
         }
+        $vars['folder'] = $folders;
+    } elseif ($vars['view'] == 'tag'){
+        $vars['tagid'] = $segments[1];
     }
-    $vars['folder'] = $folders;
+
     return $vars;
 }

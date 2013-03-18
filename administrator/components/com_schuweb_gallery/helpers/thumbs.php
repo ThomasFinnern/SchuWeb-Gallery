@@ -139,11 +139,25 @@ class ThumbsHelper
     public static function insertJS()
     {
         $web = JApplicationWeb::getInstance();
+
+        $dispatcher = JDispatcher::getInstance();
+
         if (!$web->client->mobile) {
-            $dispatcher = JDispatcher::getInstance();
             $dispatcher->register('onBeforeCompileHead', 'triggerSchuWebScriptjQuery');
         }
+
+        if (JComponentHelper::getParams('com_schuweb_gallery')->get('bootstrap', 1) == 0){
+            $dispatcher->register('onBeforeCompileHead', 'triggerSchuWebScriptBootstrap');
+        }
     }
+}
+
+function triggerSchuWebScriptBootstrap()
+{
+    $document = JFactory::getDocument();
+    $document->addStyleSheet(JUri::base() . 'media/com_schuweb_gallery/css/bootstrap.min.css')
+        ->addStyleSheet(JUri::base() . 'media/com_schuweb_gallery/css/bootstrap-responsive.min.css')
+        ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/bootstrap.min.js');
 }
 
 function triggerSchuWebScriptjQuery()

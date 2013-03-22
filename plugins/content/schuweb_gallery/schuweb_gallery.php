@@ -14,6 +14,9 @@ class plgContentSchuWeb_Gallery extends JPlugin
     public function onContentPrepare($context, &$row, &$params, $page = 0)
     {
         jimport('joomla.filesystem.folder');
+        require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/thumbs.php');
+        $helper = new ThumbsHelper();
+
         $regex = '/\{SchuWebGallery: [a-zA-Z0-9_\-\/]*\}/';
 
         preg_match($regex, $row->text, $paths);
@@ -21,36 +24,28 @@ class plgContentSchuWeb_Gallery extends JPlugin
         foreach ($paths as $path) {
             $regex = array('/\{SchuWebGallery: /', '/\}/', '/\<[a-z]*\>/', '/\<\/[a-z]*\>/');
             $folder = preg_replace($regex, '', $path);
-            $path = JPath::clean( JPATH_BASE . '/images/' . trim($folder));
+            if (!$helper->excludeFolder($folder)) {
 
-            if (JFolder::exists($path)) {
-                $files = JFolder::files($path, '.', false, false, array('.svn', 'CVS', '.DS_Store', '__MACOSX', 'index.html'));
-                $html = '<ul class="thumbnails">';
-                foreach ($files as $file) {
-                    if(!JFolder::exists($path.'/thumbs')) {
-                        $image = new JImage($path . '/' . $file);
-                        $image->createThumbs('300x200', 1);
+                $images = $helper->getThumbs($folder);
+                if ($images){
+                    $html = '<ul class="thumbnails">';
+                    foreach ($images as $file) {
+                        $html .= '<li class="span3"><a href="'.$file['image'].'" class="thumbnail group_images"><img src="'.$file['thumb'].'" alt=""></a></li>';
                     }
-                    if (JFile::exists($path . '/' . $file)) {
-                        $ext = JFile::getExt($path . '/' . $file);
-                        $name = basename($path . '/' . $file, '.'.$ext);
-                        if (!JFile::exists($path . '/thumbs/' . $name.'_300x200.'.$ext)) {
-                            $image = new JImage($path . '/' . $file);
-                            $image->createThumbs('300x200', 1);
-                        }
-                        $html .= '<li class="span3"><a href="#" class="thumbnail"><img src="'.JUri::base().'/images/'.trim($folder).'/thumbs/' . $name.'_300x200.'.$ext.'" alt=""></a></li>';
-                    }
+                    $html .= '</ul>';
+                } else {
+                    $html = '<p><strong style="color:red;">No valid image path please contact administrator</strong></p>';
                 }
-                $html .= '</ul>';
-                $folder =preg_replace('/\//', '\/', $folder);
-                $regex = '/\{SchuWebGallery: '.$folder.'\}/';
+                $folder = preg_replace('/\//', '\/', $folder);
+                $regex = '/\{SchuWebGallery: ' . $folder . '\}/';
 
                 $row->text = preg_replace($regex, $html, $row->text);
 
+                return true;
             }
 
-            return true;
-
         }
+
+        $helper->insertJS();
     }
 }

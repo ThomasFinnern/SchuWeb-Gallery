@@ -41,11 +41,12 @@ class plgContentSchuWeb_Gallery extends JPlugin
 
                 $row->text = preg_replace($regex, $html, $row->text);
 
-                return true;
             }
 
         }
 
         $helper->insertJS();
+
+        return true;
     }
 }

@@ -20,16 +20,27 @@ class ThumbsHelper
     public function __construct()
     {
         $this->params = JComponentHelper::getParams('com_schuweb_gallery');
-        $images_exclude = explode(',', $this->params->get('image_exclude'));
-        foreach ($images_exclude as $k => $v) {
-            $images_exclude[$k] = trim($v);
+
+        $images_exclude_param = $this->params->get('image_exclude');
+        if ($images_exclude_param) {
+            $images_exclude = explode(',', $images_exclude_param);
+            foreach ($images_exclude as $k => $v) {
+                $images_exclude[$k] = trim($v);
+            }
+            $this->image_excludes = array_merge($this->image_excludes, $images_exclude);
         }
-        $this->image_excludes = array_merge($this->image_excludes, $images_exclude);
-        $folders_exclude = explode(',', $this->params->get('folder_exclude'));
-        foreach ($folders_exclude as $k => $v) {
-            $folders_exclude[$k] = trim($v);
+
+
+        $folders_exclude_param = $this->params->get('folder_exclude');
+        if ($folders_exclude_param) {
+            $folders_exclude = explode(',', $folders_exclude_param);
+            foreach ($folders_exclude as $k => $v) {
+                $folders_exclude[$k] = trim($v);
+            }
+            $this->folder_excludes = array_merge($folders_exclude, $this->folder_excludes);
         }
-        $this->folder_excludes = array_merge($folders_exclude, $this->folder_excludes);
+
+
         $this->size = $this->params->get('size', '300x200');
         $this->resize_method = $this->params->get('resize_method', 1);
     }
@@ -47,6 +58,17 @@ class ThumbsHelper
     public function getFolder_excludes()
     {
         return $this->folder_excludes;
+    }
+
+    public function excludeFolder($folder)
+    {
+        foreach ($this->folder_excludes as $v) {
+            if (strpos($folder, $v)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function getThumb($path, $file)
@@ -131,7 +153,7 @@ class ThumbsHelper
             $dispatcher->register('onBeforeCompileHead', 'triggerSchuWebScriptjQuery');
         }
 
-        if (JComponentHelper::getParams('com_schuweb_gallery')->get('bootstrap', 1) == 0){
+        if (JComponentHelper::getParams('com_schuweb_gallery')->get('bootstrap', 1) == 0) {
             $dispatcher->register('onBeforeCompileHead', 'triggerSchuWebScriptBootstrap');
         }
     }

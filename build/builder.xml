@@ -53,7 +53,7 @@
         <mkdir dir="${builddir}/tmp/admin" />
         <mkdir dir="${builddir}/tmp/site" />
         <mkdir dir="${builddir}/tmp/media" />
-        <mkdir dir="${builddir}/tmp/admin/plugins" />
+        <mkdir dir="${builddir}/tmp/plugins" />
         <echo msg="Create temp folder OK!" />
     </target>
 
@@ -70,7 +70,7 @@
             <fileset refid="media" />
         </copy>
         <!-- copy the plugins -->
-        <copy todir="${builddir}/tmp/admin/plugins">
+        <copy todir="${builddir}/tmp/plugins">
             <fileset refid="plugins" />
         </copy>
          <!-- Copy the manifest.xml -->
@@ -93,12 +93,12 @@
 
     <target name="zipplugins">
         <!-- zip the plugins -->
-        <zip destfile="${builddir}/tmp/admin/plugins/plg_schuweb_gallery_${build.version}_${build.date.DSTAMP}.zip">
-            <fileset dir="${builddir}/tmp/admin/plugins">
-                <include name="schuweb_gallery/**" />
+        <zip destfile="${builddir}/plg_schuweb_gallery_${build.version}_${build.date.DSTAMP}.zip">
+            <fileset dir="${builddir}/tmp/plugins/content/schuweb_gallery">
+                <include name="*/**" />
             </fileset>
         </zip>
-        <delete dir="${builddir}/tmp/admin/plugins/schuweb_gallery" />
+        <delete dir="${builddir}/tmp/plugins" />
 
         <echo msg="Zip Plug-ins OK!" />
     </target>

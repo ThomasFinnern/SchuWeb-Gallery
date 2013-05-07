@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension version="3.0" type="plugin" group="content" method="upgrade">
-    <name>plg_content_schuweb_gallery</name>
+    <name>content_schuweb_gallery</name>
     <author>Schultschik Websolution</author>
     <creationDate>October 2012</creationDate>
     <copyright>Copyright (C) 2012 Schultschik Websolution / Sven Schultschik. All rights reserved.</copyright>

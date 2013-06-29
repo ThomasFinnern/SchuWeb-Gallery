@@ -8,68 +8,28 @@
  */
 
 defined('_JEXEC') or die;
+require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/gallery.php');
 
 class ThumbsHelper
 {
-    private $params;
     private $size = '300x200';
     private $resize_method;
-    private $image_excludes = array('.svn', 'CVS', '.DS_Store', '__MACOSX', 'index.html', 'joomla_black.gif', 'joomla_green.gif', 'joomla_logo_black.jpg', 'powered_by.png');
-    private $folder_excludes = array('.svn', 'CVS', '.DS_Store', '__MACOSX', 'thumbs', 'tmp');
+    private $imageExclude = array();
+
 
     public function __construct()
     {
-        $this->params = JComponentHelper::getParams('com_schuweb_gallery');
+        $galleryHelper = new GalleryHelper();
 
-        $images_exclude_param = $this->params->get('image_exclude');
-        if ($images_exclude_param) {
-            $images_exclude = explode(',', $images_exclude_param);
-            foreach ($images_exclude as $k => $v) {
-                $images_exclude[$k] = trim($v);
-            }
-            $this->image_excludes = array_merge($this->image_excludes, $images_exclude);
-        }
+        $this->imageExcludes = $galleryHelper->getImage_excludes();
 
+        $params = $galleryHelper->getParams();
 
-        $folders_exclude_param = $this->params->get('folder_exclude');
-        if ($folders_exclude_param) {
-            $folders_exclude = explode(',', $folders_exclude_param);
-            foreach ($folders_exclude as $k => $v) {
-                $folders_exclude[$k] = trim($v);
-            }
-            $this->folder_excludes = array_merge($folders_exclude, $this->folder_excludes);
-        }
-
-
-        $this->size = $this->params->get('size', '300x200');
-        $this->resize_method = $this->params->get('resize_method', 1);
+        $this->size = $params->get('size', '300x200');
+        $this->resize_method = $params->get('resize_method', 1);
     }
 
-    public function getParams()
-    {
-        return $this->params;
-    }
 
-    public function getImage_excludes()
-    {
-        return $this->image_excludes;
-    }
-
-    public function getFolder_excludes()
-    {
-        return $this->folder_excludes;
-    }
-
-    public function excludeFolder($folder)
-    {
-        foreach ($this->folder_excludes as $v) {
-            if (strpos($folder, $v)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     public function getThumb($path, $file)
     {
@@ -91,7 +51,7 @@ class ThumbsHelper
     {
         $res = false;
         if (JFolder::exists(JPATH_BASE . '/' . $path)) {
-            $files = JFolder::files(JPATH_BASE . '/' . $path, '.', false, false, $this->image_excludes);
+            $files = JFolder::files(JPATH_BASE . '/' . $path, '.', false, false, $this->imageExcludes);
             foreach ($files as $file) {
                 $res[] = $this->getThumb($path, $file);
             }
@@ -142,35 +102,4 @@ class ThumbsHelper
         }
         JFolder::delete($path . '/tmp');
     }
-
-    public static function insertJS()
-    {
-        $web = JApplicationWeb::getInstance();
-
-        $dispatcher = JDispatcher::getInstance();
-
-        if (!$web->client->mobile) {
-            $dispatcher->register('onBeforeCompileHead', 'triggerSchuWebScriptjQuery');
-        }
-
-        if (JComponentHelper::getParams('com_schuweb_gallery')->get('bootstrap', 1) == 0) {
-            $dispatcher->register('onBeforeCompileHead', 'triggerSchuWebScriptBootstrap');
-        }
-    }
-}
-
-function triggerSchuWebScriptBootstrap()
-{
-    $document = JFactory::getDocument();
-    $document->addStyleSheet(JUri::base() . 'media/com_schuweb_gallery/css/bootstrap.min.css')
-        ->addStyleSheet(JUri::base() . 'media/com_schuweb_gallery/css/bootstrap-responsive.min.css')
-        ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/bootstrap.min.js');
-}
-
-function triggerSchuWebScriptjQuery()
-{
-    $document = JFactory::getDocument();
-    $document->addStyleSheet(JUri::base() . 'media/com_schuweb_gallery/css/colorbox.css')
-        ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/colorbox/jquery.colorbox-min.js')
-        ->addScript(JUri::base() . 'media/com_schuweb_gallery/js/schuweb_colorbox.js');
 }

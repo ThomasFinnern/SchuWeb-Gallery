@@ -11,6 +11,7 @@ defined('_JEXEC') or die;
 
 jimport('joomla.filesystem.folder');
 require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/thumbs.php');
+require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/gallery.php');
 
 class SchuWeb_GalleryViewGallery extends JViewLegacy
 {
@@ -19,38 +20,27 @@ class SchuWeb_GalleryViewGallery extends JViewLegacy
 
     public function display($tpl = null)
     {
-        $thumbhelper = new ThumbsHelper();
+        $thumbHelper = new ThumbsHelper();
         $input = JFactory::getApplication()->input;
 
-        $start_folder = $thumbhelper->getParams()->get('start_folder', 'images');
-        $this->folder_grid_size = $thumbhelper->getParams()->get('folder_grid_size', 3);
-        $this->image_grid_size = $thumbhelper->getParams()->get('image_grid_size', 3);
+        $galleryHelper = new GalleryHelper();
+        $params = $galleryHelper->getParams();
+
+        $start_folder = $params->get('start_folder', 'images');
+
+        $this->folder_grid_size = $params->get('folder_grid_size', 3);
+        $this->image_grid_size = $params->get('image_grid_size', 3);
         $entry_folder = $input->get('folder', null, 'STRING');
+
         if ($entry_folder) {
             $start_folder = preg_replace(array('/\:/', '/\./'), array('-', '/'), $entry_folder);
         }
-        //get folders
-        $excludes = $thumbhelper->getFolder_excludes();
-        $folders = JFolder::folders(JPATH_BASE . '/' . $start_folder, '.', false, false, $excludes);
-        //get a random image
-        $image_excludes = $thumbhelper->getImage_excludes();
-        if (!empty($folders)) {
-            foreach ($folders as $key => $folder) {
-                $path = $start_folder . '/' . $folder;
-                $images = JFolder::files(JPATH_BASE . '/' . $path, '.', false, false, $image_excludes);
-                if (!empty($images)) {
-                    $image = $images[array_rand($images)];
-                    $image = $thumbhelper->getThumb($path, $image);
-                    $this->folders[$key]['folder'] = $path;
-                    $this->folders[$key]['name'] = preg_replace('/\_/', ' ', $folder);
-                    $this->folders[$key]['image'] = $image;
-                }
-            }
-        }
 
-        $this->images = $thumbhelper->getThumbs($start_folder);
+        $this->folders = $galleryHelper->getFolders($start_folder);
 
-        $thumbhelper->insertJS();
+        $this->images = $thumbHelper->getThumbs($start_folder);
+
+        $galleryHelper->insertJS();
 
         parent::display($tpl);
     }

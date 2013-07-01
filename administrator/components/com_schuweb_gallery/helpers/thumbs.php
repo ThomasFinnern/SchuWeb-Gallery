@@ -13,8 +13,8 @@ require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/gall
 class ThumbsHelper
 {
     private $size = '300x200';
-    private $resize_method;
-    private $imageExclude = array();
+    private $resizeMethod;
+    private $imageExcludes = array();
 
 
     public function __construct()
@@ -26,7 +26,7 @@ class ThumbsHelper
         $params = $galleryHelper->getParams();
 
         $this->size = $params->get('size', '300x200');
-        $this->resize_method = $params->get('resize_method', 1);
+        $this->resizeMethod = $params->get('resize_method', 1);
     }
 
 
@@ -63,7 +63,7 @@ class ThumbsHelper
     {
         if ((!JFolder::exists($path . '/thumbs')) || (!JFile::exists($path . '/thumbs/' . $name . '_' . $this->size . '.' . $ext))) {
             $image = new JImage($path . '/' . $file);
-            if (is_null($resizeMethod)) $resizeMethod = $this->resize_method;
+            if (is_null($resizeMethod)) $resizeMethod = $this->resizeMethod;
             switch ($resizeMethod) {
                 case 1:
                 case 2:
@@ -85,16 +85,16 @@ class ThumbsHelper
                     self::twoWayResize($image, $path, 3);
                     break;
                 default:
-                    throw new InvalidArgumentException('Resize Method does not exist: ' . $this->resize_method);
+                    throw new InvalidArgumentException('Resize Method does not exist: ' . $this->resizeMethod);
             }
         }
     }
 
-    private function twoWayResize($image, $path, $first_resize_method = 2)
+    private function twoWayResize($image, $path, $firstResizeMethod = 2)
     {
-        $image->createThumbs($this->size, $first_resize_method, $path . '/tmp');
+        $image->createThumbs($this->size, $firstResizeMethod, $path . '/tmp');
         $absolut_path = $path . '/tmp';
-        $images = JFolder::files($absolut_path, '.', false, false, $this->image_excludes);
+        $images = JFolder::files($absolut_path, '.', false, false, $this->imageExcludes);
         foreach ($images as $file) {
             $ext = JFile::getExt($absolut_path . '/' . $file);
             $name = basename($absolut_path . '/' . $file, '.' . $ext);

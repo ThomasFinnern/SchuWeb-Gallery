@@ -41,18 +41,20 @@ class SchuWeb_GalleryController extends JControllerLegacy
     public function recreate()
     {
         require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/thumbs.php');
-        $helper = new ThumbsHelper();
-        $folders = JFolder::folders(JPATH_ROOT . '/' . $helper->getParams()->get('start_folder'), '.', true, true, $helper->getFolder_excludes());
+        require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/gallery.php');
+        $thumbHelper = new ThumbsHelper();
+        $galleryHelper = new GalleryHelper();
+        $folders = JFolder::folders(JPATH_ROOT . '/' . $galleryHelper->getParams()->get('start_folder'), '.', true, true, $galleryHelper->getFolder_excludes());
         foreach ($folders as $folder) {
             //echo         'Folder: '.$folder . '/thumbs<br />';
             if (JFolder::exists($folder . '/thumbs')) {
                 //echo         'Deleted: '.$folder . '/thumbs<br />';
                 JFolder::delete($folder . '/thumbs');
             }
-            $helper->getThumbs($folder);
+            $thumbHelper->getThumbs($folder);
         }
 
-        $this->setRedirect('index.php?option=com_schuweb_gallery', 'SCHUWEB_GALLERY_RECREATE_SUCCESS');
+        $this->setRedirect('index.php?option=com_schuweb_gallery', JText::_('SCHUWEB_GALLERY_RECREATE_SUCCESS'));
 
     }
 }

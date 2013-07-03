@@ -77,6 +77,7 @@
         </copy>
          <!-- Copy the manifest.xml -->
         <copy file="${admin}/schuweb_gallery.xml" tofile="${builddir}/tmp/schuweb_gallery.xml" />
+        <copy file="${admin}/installer.php" tofile="${builddir}/tmp/installer.php" />
         <!--copy file="${admin}/install.php" tofile="${builddir}/tmp/install.php" /-->
         <echo msg="Copy was successfull" />
         <!-- insert version, build number and date into the xml files -->

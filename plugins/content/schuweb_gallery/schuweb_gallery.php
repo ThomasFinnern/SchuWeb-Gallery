@@ -15,7 +15,9 @@ class plgContentSchuWeb_Gallery extends JPlugin
     {
         jimport('joomla.filesystem.folder');
         require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/thumbs.php');
-        $helper = new ThumbsHelper();
+        require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/gallery.php');
+        $thumbsHelper = new ThumbsHelper();
+        $galleryHelper = new GalleryHelper();
 
         $regex = '/\{SchuWebGallery: [a-zA-Z0-9_\-\/]*\}/';
 
@@ -24,9 +26,9 @@ class plgContentSchuWeb_Gallery extends JPlugin
         foreach ($paths as $path) {
             $regex = array('/\{SchuWebGallery: /', '/\}/', '/\<[a-z]*\>/', '/\<\/[a-z]*\>/');
             $folder = preg_replace($regex, '', $path);
-            if (!$helper->excludeFolder($folder)) {
+            if (!$galleryHelper->excludeFolder($folder)) {
 
-                $images = $helper->getThumbs($folder);
+                $images = $thumbsHelper->getThumbs($folder);
                 if ($images){
                     $html = '<ul class="thumbnails">';
                     foreach ($images as $file) {
@@ -45,7 +47,7 @@ class plgContentSchuWeb_Gallery extends JPlugin
 
         }
 
-        $helper->insertJS();
+        $galleryHelper->insertJS();
 
         return true;
     }

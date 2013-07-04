@@ -16,7 +16,7 @@ defined('_JEXEC') or die;
  * @subpackage  com_finder
  * @since       2.5
  */
-require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/thumbs.php');
+require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/gallery.php');
 
 class Schuweb_galleryModelImages extends JModelList
 {
@@ -32,7 +32,7 @@ class Schuweb_galleryModelImages extends JModelList
             $base = $params->get('start_folder', 'images').'/'.$base;
         }
 
-        $thumbhelper = new ThumbsHelper();
+        $thumbhelper = new GalleryHelper();
         $image_excludes = $thumbhelper->getImage_excludes();
 
         return JFolder::files(JPATH_ROOT . '/' . $base, '.', false, false, $image_excludes);
@@ -53,7 +53,7 @@ class Schuweb_galleryModelImages extends JModelList
         $base = str_replace(DIRECTORY_SEPARATOR, '/', $base);
         $com_media_base_uni = str_replace(DIRECTORY_SEPARATOR, '/', JPATH_ROOT . '/images');
 
-        $thumbhelper = new ThumbsHelper();
+        $thumbhelper = new GalleryHelper();
         $folder_excludes = $thumbhelper->getFolder_excludes();
 
         // Get the list of folders

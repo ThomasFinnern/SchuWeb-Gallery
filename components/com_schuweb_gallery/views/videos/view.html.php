@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 jimport('joomla.filesystem.folder');
-require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/thumbs.php');
+require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/gallery.php');
 
 class SchuWeb_GalleryViewVideos extends JViewLegacy
 {
@@ -18,10 +18,12 @@ class SchuWeb_GalleryViewVideos extends JViewLegacy
 
     public function display($tpl = null)
     {
-        $thumbhelper = new ThumbsHelper();
-        $this->video_grid_size = $thumbhelper->getParams()->get('video_grid_size', '3');
-        $this->video_width = $thumbhelper->getParams()->get('video_width', '300');
-        $this->video_height = $thumbhelper->getParams()->get('video_height', '200');
+        $galleryHelper = new GalleryHelper();
+        $params = $galleryHelper->getParams();
+
+        $this->video_grid_size = $params->get('video_grid_size', '3');
+        $this->video_width = $params->get('video_width', '300');
+        $this->video_height = $params->get('video_height', '200');
 
         $model = JModelList::getInstance('Videos', 'SchuWeb_GalleryModel');
 

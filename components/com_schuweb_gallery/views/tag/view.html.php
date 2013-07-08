@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 jimport('joomla.filesystem.folder');
-require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/thumbs.php');
+require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/gallery.php');
 
 class SchuWeb_GalleryViewTag extends JViewLegacy
 {
@@ -18,12 +18,14 @@ class SchuWeb_GalleryViewTag extends JViewLegacy
 
     public function display($tpl = null)
     {
-        $this->thumbhelper = new ThumbsHelper();
-        $this->video_grid_size = $this->thumbhelper->getParams()->get('video_grid_size', '3');
-        $this->image_grid_size = $this->thumbhelper->getParams()->get('image_grid_size', '3');
-        $this->video_width = $this->thumbhelper->getParams()->get('video_width', '300');
-        $this->video_height = $this->thumbhelper->getParams()->get('video_height', '200');
-        $this->startFolder = $this->thumbhelper->getParams()->get('start_folder', 'images');
+        $galleryHelper = new GalleryHelper();
+        $params = $galleryHelper->getParams();
+
+        $this->video_grid_size = $params->get('video_grid_size', '3');
+        $this->image_grid_size = $params->get('image_grid_size', '3');
+        $this->video_width = $params->get('video_width', '300');
+        $this->video_height = $params->get('video_height', '200');
+        $this->startFolder = $params->get('start_folder', 'images');
 
         $model = JModelList::getInstance('Videos', 'SchuWeb_GalleryModel');
 
@@ -33,7 +35,7 @@ class SchuWeb_GalleryViewTag extends JViewLegacy
 
         $this->images = $imagesModel->getItems();
 
-        $this->thumbhelper->insertJS();
+        $galleryHelper->insertJS();
 
         parent::display($tpl);
     }

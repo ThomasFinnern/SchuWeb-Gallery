@@ -9,6 +9,7 @@
 
 defined('_JEXEC') or die;
 require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/gallery.php');
+jimport('joomla.filesystem.file');
 
 class ThumbsHelper
 {

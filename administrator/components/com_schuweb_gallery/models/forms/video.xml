@@ -16,8 +16,7 @@
                 SCHUWEB_GALLERY_YOUTUBE
             </option>
         </field>
-        <field name="tags" type="sql" key_field="id" value_field="name" label="SCHUWEB_GALLERY_TAGS" multiple="true" query="SELECT * FROM #__schuweb_gallery_tags">
-        </field>
+        <field name="tags" type="tag"  label="JTAG" description="JTAG_DESC" class="inputbox span12 small" multiple="true"/>
         <field name="state" type="list"
                label="JSTATUS"
                class="inputbox span12 small" size="1" default="1">

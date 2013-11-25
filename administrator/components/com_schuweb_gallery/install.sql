@@ -30,13 +30,6 @@ CREATE TABLE IF NOT EXISTS `#__schuweb_gallery_image_tags` (
   KEY `image` (`image`)
 );
 
-CREATE TABLE IF NOT EXISTS `#__schuweb_gallery_tags` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-);
-
 CREATE TABLE IF NOT EXISTS `#__schuweb_gallery_video_tags` (
   `tagid` int(11) NOT NULL,
   `videoid` int(11) NOT NULL,

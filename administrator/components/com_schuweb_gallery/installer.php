@@ -120,24 +120,7 @@ class com_schuweb_galleryInstallerScript
 
         $query = $db->getQuery(true);
         $query->select('*')
-            ->from('#__schuweb_gallery_tags');
-        $db->setQuery($query);
-        try {
-            $db->loadResult();
-        } catch (Exception $e) {
-            $query = "CREATE TABLE IF NOT EXISTS `#__schuweb_gallery_tags` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(30) NOT NULL,
-  PRIMARY KEY(`id`),
-  UNIQUE KEY `name` (`name`)
-)";
-            $db->setQuery($query);
-            $db->execute();
-        }
-
-        $query = $db->getQuery(true);
-        $query->select('*')
-            ->from('#__schuweb_gallery_tags');
+            ->from('#__schuweb_gallery_video_tags');
         $db->setQuery($query);
         if (!$db->loadResult()) {
             $query = "CREATE TABLE IF NOT EXISTS `#__schuweb_gallery_video_tags` (

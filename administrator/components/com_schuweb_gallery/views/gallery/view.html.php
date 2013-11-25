@@ -45,7 +45,5 @@ class SchuWeb_GalleryViewGallery extends JViewLegacy
         JHtmlSidebar::addEntry(JText::_('SCHUWEB_GALLERY_IMAGES'), 'index.php?option=com_schuweb_gallery&view=images');
 
         JHtmlSidebar::addEntry(JText::_('SCHUWEB_GALLERY_VIDEOS'),'index.php?option=com_schuweb_gallery&view=videos');
-
-        JHtmlSidebar::addEntry(JText::_('SCHUWEB_GALLERY_TAGS'), 'index.php?option=com_schuweb_gallery&view=tags');
     }
 }

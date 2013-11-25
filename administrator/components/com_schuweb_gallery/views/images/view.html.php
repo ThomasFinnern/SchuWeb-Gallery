@@ -65,8 +65,6 @@ class SchuWeb_GalleryViewImages extends JViewLegacy
 
         JHtmlSidebar::addEntry(JText::_('SCHUWEB_GALLERY_VIDEOS'),'index.php?option=com_schuweb_gallery&view=videos');
 
-        JHtmlSidebar::addEntry(JText::_('SCHUWEB_GALLERY_TAGS'), 'index.php?option=com_schuweb_gallery&view=tags');
-
         /*JHtmlSidebar::addFilter(
             JText::_('JOPTION_SELECT_PUBLISHED'),
             'filter_state',

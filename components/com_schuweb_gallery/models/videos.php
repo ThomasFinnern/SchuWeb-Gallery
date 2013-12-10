@@ -36,18 +36,22 @@ class SchuWeb_GalleryModelVideos extends JModelList
 
         $tagId = JFactory::getApplication()->input->get('tagid', null, 'int');
 
-        if ( $tagId == null) {
+        if ($tagId == null) {
             $tagId = $menuparams->get('tag');
+        }
+
+        if (is_array($tagId)) {
+            $tagId = implode(',', $tagId);
         }
 
         $query->select("a.video_id, a.video_service")
             ->from("#__schuweb_gallery_videos as a");
-        if ( $vService != 'all' && $vService != null) {
-            $query->where('a.video_service=\''.$db->escape($vService).'\'');
+        if ($vService != 'all' && $vService != null) {
+            $query->where('a.video_service=\'' . $db->escape($vService) . '\'');
         }
-        if ( $tagId != null) {
+        if ($tagId != null) {
             $query->leftJoin('#__schuweb_gallery_video_tags as b ON a.id=b.videoid')
-                ->where('b.tagid='.$this->_db->quote($tagId));
+                ->where('b.tagid=' . $this->_db->quote($tagId));
         }
 
         return $query;

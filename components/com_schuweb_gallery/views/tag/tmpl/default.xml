@@ -15,9 +15,7 @@
         <fieldset name="params"
                   label="SCHUWEB_GALLERY_BASIC_OPTIONS_LABEL"
                 >
-            <field name="tag" type="sql" key_field="id" value_field="name" label="SCHUWEB_GALLERY_TAGS"
-                   query="SELECT * FROM #__schuweb_gallery_tags">
-            </field>
+            <field name="tag" type="tag"  label="JTAG" description="JTAG_DESC" class="inputbox span12 small" multiple="true"/>
         </fieldset>
     </fields>
 </metadata>

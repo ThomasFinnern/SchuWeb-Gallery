@@ -11,7 +11,15 @@ defined('_JEXEC') or die;
 
 ?>
 <div>
-    <?php if ($this->videos) echo $this->loadTemplate('videos');?>
+    <?php if ($this->prevButtonPosition == 1 || $this->prevButtonPosition == 3) : ?>
+        <a href="<?php echo $this->backPath; ?>" class="btn btn-primary"><?php echo JText::_('JPREV'); ?></a>
+    <?php endif; ?>
 
-    <?php if ($this->images) echo $this->loadTemplate('Images');?>
+    <?php if ($this->videos) echo $this->loadTemplate('videos'); ?>
+
+    <?php if ($this->images) echo $this->loadTemplate('Images'); ?>
+
+    <?php if ($this->prevButtonPosition == 2 || $this->prevButtonPosition == 3) : ?>
+        <a href="<?php echo $this->backPath; ?>" class="btn btn-primary"><?php echo JText::_('JPREV'); ?></a>
+    <?php endif; ?>
 </div>

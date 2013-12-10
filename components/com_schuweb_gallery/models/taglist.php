@@ -17,21 +17,58 @@ defined('_JEXEC') or die;
  */
 class SchuWeb_GalleryModelTagList extends JModelList
 {
-    /**
-     * Method to get a JDatabaseQuery object for retrieving the data set from a database.
-     *
-     * @return  JDatabaseQuery   A JDatabaseQuery object to retrieve the data set.
-     *
-     * @since   12.2
-     */
-    protected function getListQuery()
+    function getItems()
     {
+        // Which tags should be displayed
+        $app = JFactory::getApplication();
+        $menuparams = $app->getParams();
+
+        $tagListDisplayOption = $menuparams->get('tagListDisplayOption');
+
+        //Get the data from DB
         $db = $this->getDbo();
         $query = $db->getQuery(true);
 
-        $query->select("*")
-            ->from("#__schuweb_gallery_tags");
+        if ($tagListDisplayOption == "used" || $tagListDisplayOption == "image") {
 
-        return $query;
+            //Get all tags from image table
+            $query->select("DISTINCT t.id, t.title")
+                ->from("#__schuweb_gallery_image_tags AS it")
+                ->leftJoin('#__tags AS t ON it.tagid = t.id');
+
+        } elseif ($tagListDisplayOption == "video") {
+            $query->select("DISTINCT t.id, t.title")
+                ->from("#__schuweb_gallery_video_tags AS it")
+                ->leftJoin('#__tags AS t ON it.tagid = t.id');
+
+        } else { //Select all available tags
+            $query->select("*")
+                ->from("#__tags AS t")
+                ->where("t.title != 'ROOT'");
+        }
+
+        $query->where('t.published = 1');
+
+        $db->setQuery($query);
+        $tags = $db->loadObjectList();
+
+        if ($tagListDisplayOption == "used") {
+            //Get all tags from videos but not those which we have already
+            $query = $db->getQuery(true);
+
+            $query->select("DISTINCT t.id, t.title")
+                ->from("#__tags AS t")
+                ->rightJoin('#__schuweb_gallery_video_tags AS vt ON vt.tagid = t.id')
+                ->where("t.id != ANY (SELECT it.tagid FROM #__schuweb_gallery_image_tags AS it)")
+                ->where("t.published = 1");
+            $db->setQuery($query);
+            $tags2 = $db->loadObjectList();
+
+
+            //concat both tag lists
+            $tags = array_merge($tags, $tags2);
+        }
+
+        return $tags;
     }
 }

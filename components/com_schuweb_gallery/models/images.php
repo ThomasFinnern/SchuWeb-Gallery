@@ -38,6 +38,10 @@ class SchuWeb_GalleryModelImages extends JModelList
             $tagId = $menuparams->get('tag');
         }
 
+        if (is_array($tagId)) {
+            $tagId = implode(',', $tagId);
+        }
+
         $query->select("a.path, a.image")
             ->from("#__schuweb_gallery_image_tags as a");
         if ($tagId != null) {

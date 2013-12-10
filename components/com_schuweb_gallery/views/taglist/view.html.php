@@ -14,7 +14,7 @@ require_once(JPATH_ADMINISTRATOR . '/components/com_schuweb_gallery/helpers/thum
 
 class SchuWeb_GalleryViewTagList extends JViewLegacy
 {
-    protected $videos = array();
+    protected $tags = array();
 
     public function display($tpl = null)
     {

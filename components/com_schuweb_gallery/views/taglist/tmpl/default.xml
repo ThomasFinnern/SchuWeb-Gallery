@@ -8,4 +8,23 @@
             <![CDATA[SCHUWEB_GALLERY_TAGS_VIEW_DESC]]>
         </message>
     </layout>
+
+    <fields name="params">
+
+        <!-- Basic options. -->
+        <fieldset name="params"
+                  label="SCHUWEB_GALLERY_TAGLIST_LABEL"
+                >
+            <field name="tagListDisplayOption"
+                   type="list"
+                   label="SCHUWEB_GALLERY_TAGLIST_DISPLAY"
+                   description="SCHUWEB_GALLERY_TAGLIST_DISPLAY_DESC"
+                    >
+                <option value="all">JALL</option>
+                <option value="used">SCHUWEB_GALLERY_TAGLIST_USED</option>
+                <option value="image">SCHUWEB_GALLERY_IMAGE</option>
+                <option value="video">SCHUWEB_GALLERY_VIDEO</option>
+            </field>
+        </fieldset>
+    </fields>
 </metadata>

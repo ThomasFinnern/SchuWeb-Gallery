@@ -2,24 +2,7 @@
 <config>
     <fieldset
             name="advanced"
-            label="SCHUWEB_GALLERY_GENERAL"
-            description="SCHUWEB_GALLERY_GENERAL_DESC">
-        <field
-                name="bootstrap"
-                type="radio"
-                component="com_schuweb_gallery"
-                section="component"
-                label="SCHUWEB_GALLERY_BOOTSTRAP_TEMPLATE"
-                description="SCHUWEB_GALLERY_BOOTSTRAP_TEMPLATE_DESC"
-                class="btn-group"
-                default="1">
-                <option value="0">JNO</option>
-                <option value="1">JYES</option>
-        </field>
-        <field
-                name="spacer3"
-                type="spacer"
-                hr="true"/>
+            label="SCHUWEB_GALLERY_GENERAL">
         <field
                 name="start_folder"
                 type="text"
@@ -52,6 +35,36 @@
             <option value="6">SCHUWEB_GALLERY_SCALE_OUTSIDE_CROP</option>
         </field>
         <field
+                name="spacer2"
+                type="spacer"
+                hr="true"/>
+        <field
+                name="folder_exclude"
+                type="text"
+                label="COM_SCHUWEB_GALLERY_FOLDER_EXCLUDE_LABEL"
+                description="COM_SCHUWEB_GALLERY_FOLDER_EXCLUDE_DESC"/>
+        <field
+                name="image_exclude"
+                type="text"
+                label="COM_SCHUWEB_GALLERY_IMAGE_EXCLUDE_LABEL"
+                description="COM_SCHUWEB_GALLERY_IMAGE_EXCLUDE_DESC"/>
+    </fieldset>
+    <fieldset
+            name="layout"
+            label="SCHUWEB_GALLERY_LAYOUT">
+        <field
+                name="bootstrap"
+                type="radio"
+                component="com_schuweb_gallery"
+                section="component"
+                label="SCHUWEB_GALLERY_BOOTSTRAP_TEMPLATE"
+                description="SCHUWEB_GALLERY_BOOTSTRAP_TEMPLATE_DESC"
+                class="btn-group"
+                default="1">
+            <option value="0">JNO</option>
+            <option value="1">JYES</option>
+        </field>
+        <field
                 name="spacer"
                 type="spacer"
                 hr="true"/>
@@ -74,19 +87,22 @@
                 label="COM_SCHUWEB_GALLERY_IMAGE_GRID_BOOTSTRAP_SIZE_LABEL"
                 description="COM_SCHUWEB_GALLERY_IMAGE_GRID_BOOTSTRAP_SIZE_DESC"/>
         <field
-                name="spacer2"
+                name="spacer3"
                 type="spacer"
                 hr="true"/>
         <field
-                name="folder_exclude"
-                type="text"
-                label="COM_SCHUWEB_GALLERY_FOLDER_EXCLUDE_LABEL"
-                description="COM_SCHUWEB_GALLERY_FOLDER_EXCLUDE_DESC"/>
-        <field
-                name="image_exclude"
-                type="text"
-                label="COM_SCHUWEB_GALLERY_IMAGE_EXCLUDE_LABEL"
-                description="COM_SCHUWEB_GALLERY_IMAGE_EXCLUDE_DESC"/>
+                name="prevButtonPosition"
+                type="list"
+                component="com_schuweb_gallery"
+                section="component"
+                label="SCHUWEB_GALLERY_PREVBUTTON_VISIBLE"
+                description="SCHUWEB_GALLERY_PREVBUTTON_VISIBLE_DESC"
+                >
+            <option value="-1">JHIDE</option>
+            <option value="1">SCHUWEB_GALLERY_TOP</option>
+            <option value="2">SCHUWEB_GALLERY_BOTTOM</option>
+            <option value="3">SCHUWEB_GALLERY_BOTH</option>
+        </field>
     </fieldset>
     <fieldset name="video">
         <field

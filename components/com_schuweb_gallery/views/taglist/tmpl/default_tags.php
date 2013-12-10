@@ -13,7 +13,7 @@ defined('_JEXEC') or die;
 <ul class="thumbnails">
     <?php foreach ($this->tags as $tag) : ?>
     <li>
-        <a href="<?php echo JRoute::_("index.php?option=com_schuweb_gallery&view=tag&tagid=".$tag->id) ?>"><?php echo $tag->name ?></a>
+        <a href="<?php echo JRoute::_("index.php?option=com_schuweb_gallery&view=tag&tagid=".$tag->id) ?>"><?php echo $tag->title ?></a>
     </li>
     <?php endforeach; ?>
 </ul>

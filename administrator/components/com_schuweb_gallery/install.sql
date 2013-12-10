@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `#__schuweb_gallery_image_tags` (
   `tagid` int(11) NOT NULL,
   `path` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
-  UNIQUE KEY `tagid` (`tagid`,`path`,`image`),
+  PRIMARY KEY (`tagid`),
   KEY `path` (`path`),
   KEY `image` (`image`)
 );

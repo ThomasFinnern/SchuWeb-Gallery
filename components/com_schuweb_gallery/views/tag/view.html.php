@@ -23,6 +23,7 @@ class SchuWeb_GalleryViewTag extends JViewLegacy
     protected $video_width = null;
     protected $video_height = null;
     protected $startFolder = null;
+    protected $displayVideoName = null;
 
     public function display($tpl = null)
     {
@@ -34,6 +35,8 @@ class SchuWeb_GalleryViewTag extends JViewLegacy
         $this->video_width = $params->get('video_width', '300');
         $this->video_height = $params->get('video_height', '200');
         $this->startFolder = $params->get('start_folder', 'images');
+
+        $this->displayVideoName = $params->get('videoName', 1);
 
         $model = JModelList::getInstance('Videos', 'SchuWeb_GalleryModel');
 

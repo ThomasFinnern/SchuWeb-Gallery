@@ -58,6 +58,14 @@ JHtml::_('formbehavior.chosen', 'select');
                         </div>
                         <div class="control-group">
                             <div class="control-label">
+                                <?php echo $this->form->getLabel("name"); ?>
+                            </div>
+                            <div class="controls">
+                                <?php echo $this->form->getInput("name"); ?>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="control-label">
                                 <?php echo $this->form->getLabel("tags"); ?>
                             </div>
                             <div class="controls">

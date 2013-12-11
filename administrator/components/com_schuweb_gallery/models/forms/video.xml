@@ -4,6 +4,7 @@
         <field name="id" type="text" default="0"
                readonly="true" class="readonly"
                label="JGLOBAL_FIELD_ID_LABEL" description="JGLOBAL_FIELD_ID_DESC"/>
+        <field name="name" type="text" default="" label="SCHUWEB_GALLERY_NAME" required="true"/>
         <field name="video_id" type="text" default="0" label="SCHUWEB_GALLERY_VIDEOID" required="true"/>
         <field name="video_service" type="list" label="SCHUWEB_GALLERY_VIDEO_SERVICE"
                class="inputbox"
@@ -16,7 +17,8 @@
                 SCHUWEB_GALLERY_YOUTUBE
             </option>
         </field>
-        <field name="tags" type="tag"  label="JTAG" description="JTAG_DESC" class="inputbox span12 small" multiple="true"/>
+        <field name="tags" type="tag" label="JTAG" description="JTAG_DESC" class="inputbox span12 small"
+               multiple="true"/>
         <field name="state" type="list"
                label="JSTATUS"
                class="inputbox span12 small" size="1" default="1">
@@ -36,7 +38,7 @@
                class="inputbox" size="22" format="%Y-%m-%d %H:%M:%S"
                filter="user_utc"/>
         <field name="created_by" type="user"
-               label="SCHUWEB_GALLERY_FIELD_CREATED_BY_LABEL"       />
+               label="SCHUWEB_GALLERY_FIELD_CREATED_BY_LABEL"/>
 
         <field name="created_by_alias" type="text"
                label="SCHUWEB_GALLERY_FIELD_CREATED_BY_ALIAS_LABEL"

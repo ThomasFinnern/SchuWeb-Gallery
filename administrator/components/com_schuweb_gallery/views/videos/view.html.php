@@ -106,6 +106,7 @@ class SchuWeb_GalleryViewVideos extends JViewLegacy
         return array(
             'ordering' => JText::_('JGRID_HEADING_ORDERING'),
             'a.state' => JText::_('JSTATUS'),
+            'a.name' => JText::_('SCHUWEB_GALLERY_NAME'),
             'a.video_id' => JText::_('SCHUWEB_GALLERY_VIDEOID'),
             'a.video_service' => JText::_('SCHUWEB_GALLERY_VIDEO_SERVICE'),
             'a.id' => JText::_('JGRID_HEADING_ID')

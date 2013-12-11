@@ -20,6 +20,7 @@ class SchuWeb_GalleryViewVideos extends JViewLegacy
     protected $video_width = null;
     protected $video_height = null;
     protected $backPath = null;
+    protected $displayVideoName = null;
 
     public function display($tpl = null)
     {
@@ -35,6 +36,8 @@ class SchuWeb_GalleryViewVideos extends JViewLegacy
         $model = JModelList::getInstance('Videos', 'SchuWeb_GalleryModel');
 
         $this->videos = $model->getItems();
+
+        $this->displayVideoName = $params->get('videoName', 1);
 
         $this->backPath = JRoute::_("index.php?option=com_schuweb_gallery&amp;view=videos");
 

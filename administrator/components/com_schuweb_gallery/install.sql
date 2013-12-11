@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS `#__schuweb_gallery_videos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `video_id` varchar(30) NOT NULL,
   `video_service` varchar(30) NOT NULL,
+  `name` varchar(30) NOT NULL,
   `date` datetime NOT NULL,
   `checked_out` int(10) unsigned NOT NULL DEFAULT '0',
   `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',

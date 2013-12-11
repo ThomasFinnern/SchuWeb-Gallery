@@ -44,7 +44,7 @@ class SchuWeb_GalleryModelVideos extends JModelList
             $tagId = implode(',', $tagId);
         }
 
-        $query->select("a.video_id, a.video_service")
+        $query->select("a.video_id, a.video_service, a.name")
             ->from("#__schuweb_gallery_videos as a");
         if ($vService != 'all' && $vService != null) {
             $query->where('a.video_service=\'' . $db->escape($vService) . '\'');

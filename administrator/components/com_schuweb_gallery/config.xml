@@ -128,6 +128,16 @@
                 section="component"
                 label="SCHUWEB_GALLERY_VIDEO_HEIGHT"
                 default="200"/>
+        <field name="videoName"
+               type="radio"
+               component="com_schuweb_gallery"
+               section="component"
+               label="SCHUWEB_GALLERY_VIDEO_DISPLAY_NAME"
+               class="btn-group"
+               default="1">
+            <option value="0">JHIDE</option>
+            <option value="1">JSHOW</option>
+        </field>
     </fieldset>
     <fieldset
             name="permissions"

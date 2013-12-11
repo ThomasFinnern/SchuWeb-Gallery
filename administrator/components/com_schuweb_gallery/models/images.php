@@ -46,7 +46,7 @@ class Schuweb_galleryModelImages extends JModelList
         // Get some paths from the request
         if (empty($base)) {
             $params = JComponentHelper::getParams('com_schuweb_gallery');
-            $base = $params->get('start_folder');
+            $base = $params->get('start_folder', 'images');
         }
 
         //corrections for windows paths

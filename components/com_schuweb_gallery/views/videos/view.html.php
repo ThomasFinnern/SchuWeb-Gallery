@@ -41,6 +41,8 @@ class SchuWeb_GalleryViewVideos extends JViewLegacy
 
         $this->backPath = JRoute::_("index.php?option=com_schuweb_gallery&amp;view=videos");
 
+        $galleryHelper->insertJS();
+
         parent::display($tpl);
     }
 

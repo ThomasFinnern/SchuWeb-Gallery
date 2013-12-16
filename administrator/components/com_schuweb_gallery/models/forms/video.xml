@@ -4,7 +4,7 @@
         <field name="id" type="text" default="0"
                readonly="true" class="readonly"
                label="JGLOBAL_FIELD_ID_LABEL" description="JGLOBAL_FIELD_ID_DESC"/>
-        <field name="name" type="text" default="" label="SCHUWEB_GALLERY_NAME" required="true"/>
+        <field name="name" type="text" default="" label="SCHUWEB_GALLERY_VIDEO_NAME" required="true"/>
         <field name="video_id" type="text" default="0" label="SCHUWEB_GALLERY_VIDEOID" required="true"/>
         <field name="video_service" type="list" label="SCHUWEB_GALLERY_VIDEO_SERVICE"
                class="inputbox"

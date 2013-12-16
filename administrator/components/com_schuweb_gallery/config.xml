@@ -114,7 +114,7 @@
                 default="3"
                 label="SCHUWEB_GALLERY_VIDEO_GRID_BOOTSTRAP_SIZE_LABEL"
                 description="SCHUWEB_GALLERY_VIDEO_GRID_BOOTSTRAP_SIZE_DESC"/>
-        <field
+        <!--field
                 name="video_width"
                 type="text"
                 component="com_schuweb_gallery"
@@ -127,12 +127,12 @@
                 component="com_schuweb_gallery"
                 section="component"
                 label="SCHUWEB_GALLERY_VIDEO_HEIGHT"
-                default="200"/>
+                default="200"/-->
         <field name="videoName"
                type="radio"
                component="com_schuweb_gallery"
                section="component"
-               label="SCHUWEB_GALLERY_VIDEO_DISPLAY_NAME"
+               label="SCHUWEB_GALLERY_VIDEO_NAME"
                class="btn-group"
                default="1">
             <option value="0">JHIDE</option>

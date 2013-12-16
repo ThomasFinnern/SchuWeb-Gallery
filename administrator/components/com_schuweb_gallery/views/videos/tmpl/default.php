@@ -111,7 +111,7 @@ if ($saveOrder) {
                         <?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder); ?>
                     </th>
                     <th width="10%">
-                        <?php echo JHtml::_('grid.sort', 'SCHUWEB_GALLERY_NAME', 'a.name', $listDirn, $listOrder); ?>
+                        <?php echo JHtml::_('grid.sort', 'SCHUWEB_GALLERY_VIDEO_NAME', 'a.name', $listDirn, $listOrder); ?>
                     <th width="10%">
                         <?php echo JHtml::_('grid.sort', 'SCHUWEB_GALLERY_VIDEOID', 'a.video_id', $listDirn, $listOrder); ?>
                     </th>

@@ -107,7 +107,7 @@ JHtml::_('formbehavior.chosen', 'select');
             <fieldset class="form-vertical">
                 <div class="control-group">
                     <div class="controls">
-                        <?php echo $this->form->getValue('name'); ?>
+                        <?php //echo $this->form->getValue('name'); ?>
                     </div>
                 </div>
 

@@ -38,6 +38,10 @@ class SchuWeb_GalleryViewGallery extends JViewLegacy
 
         $entry_folder = $input->get('folder', null, 'STRING');
 
+        if ($entry_folder != null || empty($entry_folder)) {
+            $this->prevButtonPosition = 0;
+        }
+
         if ($entry_folder) {
             $start_folder = preg_replace(array('/\:/', '/\./'), array('-', '/'), $entry_folder);
         }

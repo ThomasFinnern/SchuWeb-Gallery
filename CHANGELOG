@@ -1,0 +1,13 @@
+-- Version 1.1.0
++ add back button to image and video gallery
++ play videos in colorbox
++ add name/title to videos
+
+^ bootstrap update to 3.0.3
+^ colorbox update to 1.4.33
+^ Use Joomla 3.1 tagsystem instead of own
+
+# default value for entry folder of image gallery missing
+# DB does not create tables on install (only pro)
+# some language correction
+# Fatal error ThumbsHelper getActions undefined

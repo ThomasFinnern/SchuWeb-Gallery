@@ -6,6 +6,6 @@
 
 DROP TABLE #__schuweb_gallery_videos;
 
-DROP TABLE #__schuweb_gallery_image_tags;tag
+DROP TABLE #__schuweb_gallery_image_tags;
 
 DROP TABLE #__schuweb_gallery_video_tags;

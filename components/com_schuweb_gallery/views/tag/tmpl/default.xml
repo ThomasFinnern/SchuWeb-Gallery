@@ -13,7 +13,7 @@
 
         <!-- Basic options. -->
         <fieldset name="params"
-                  label="SCHUWEB_GALLERY_BASIC_OPTIONS_LABEL"
+                  label="SCHUWEB_GALLERY_TAGS"
                 >
             <field name="tag" type="tag"  label="JTAG" description="JTAG_DESC" class="inputbox span12 small" multiple="true"/>
         </fieldset>

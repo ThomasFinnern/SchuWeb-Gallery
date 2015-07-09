@@ -19,6 +19,9 @@ class plgContentSchuWeb_Gallery extends JPlugin
         $thumbsHelper = new ThumbsHelper();
         $galleryHelper = new GalleryHelper();
 
+        $params = $galleryHelper->getParams();
+        $image_grid_size = $params->get('image_grid_size', 3);
+
         $regex = '/\{SchuWebGallery: [a-zA-Z0-9_\-\/]*\}/';
 
         preg_match($regex, $row->text, $paths);
@@ -32,7 +35,7 @@ class plgContentSchuWeb_Gallery extends JPlugin
                 if ($images){
                     $html = '<ul class="thumbnails">';
                     foreach ($images as $file) {
-                        $html .= '<li class="span3"><a href="'.$file['image'].'" class="thumbnail group_images"><img src="'.$file['thumb'].'" alt=""></a></li>';
+                        $html .= '<li class="span'.$image_grid_size.'"><a href="'.$file['image'].'" class="thumbnail group_images"><img src="'.$file['thumb'].'" alt=""></a></li>';
                     }
                     $html .= '</ul>';
                 } else {

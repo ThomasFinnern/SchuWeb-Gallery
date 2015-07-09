@@ -19,8 +19,8 @@ class plgContentSchuWeb_Gallery extends JPlugin
         $thumbsHelper = new ThumbsHelper();
         $galleryHelper = new GalleryHelper();
 
-        $params = $galleryHelper->getParams();
-        $image_grid_size = $params->get('image_grid_size', 3);
+        $gparams = $galleryHelper->getParams();
+        $image_grid_size = $gparams->get('image_grid_size', 3);
 
         $regex = '/\{SchuWebGallery: [a-zA-Z0-9_\-\/]*\}/';
 
